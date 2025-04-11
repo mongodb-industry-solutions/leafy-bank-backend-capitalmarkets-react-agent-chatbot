@@ -29,14 +29,6 @@ MongoDB is a powerful database solution that excels in managing financial data, 
 - [Uvicorn](https://www.uvicorn.org/) for ASGI server.
 - [Docker](https://www.docker.com/) for containerization.
 
-## Relevant Python Packages
-
-- [yfinance](https://pypi.org/project/yfinance/) for extracting market data from Yahoo Finance.
-- [pyfredapi](https://pypi.org/project/pyfredapi/) for extracting macroeconomic data from the FRED API.
-- [pandas](https://pandas.pydata.org/) for data manipulation.
-- [scheduler](https://pypi.org/project/scheduler/) for job scheduling.
-- [transformers](https://huggingface.co/transformers/) for natural language processing.
-
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
@@ -50,10 +42,6 @@ Before you begin, ensure you have met the following requirements:
 ### Step 1a: Set Up MongoDB Database and Collections
 
 1. Log in to **MongoDB Atlas** and create a database named `agentic_capital_markets`. Ensure the name is reflected in the environment variables.
-2. Create the following collections:
-   - `financial_news` (for storing financial news data) - You can export some sample data to this collection using `backend/loaders/db/collections/agentic_capital_markets.financial_news.json` file.
-   - `pyfredapiMacroeconomicIndicators` (for storing macroeconomic data) - You can export some sample data to this collection using `backend/loaders/db/collections/agentic_capital_markets.pyfredapiMacroeconomicIndicators.json` file.
-   - `yfinanceMarketData` (for storing market data) - You can export some sample data to this collection using `backend/loaders/db/collections/agentic_capital_markets.yfinanceMarketData.json` file. Additionally, there are some more backup files in this directory that you can use to populate the collection:  `backend/loaders/backup/*`
 
 > **_Note:_** For creating the time series collection, you can run the following python script located in the `backend/loaders/db/` directory: `create_time_series_collection.py`. Make sure to parametrize the script accordingly.
 

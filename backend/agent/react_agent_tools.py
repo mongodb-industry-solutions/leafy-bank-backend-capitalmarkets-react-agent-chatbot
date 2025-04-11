@@ -3,8 +3,8 @@ import logging
 from dotenv import load_dotenv
 from langchain.tools import tool
 from langchain_community.tools.tavily_search import TavilySearchResults
-from agents.tools.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
-from agents.tools.db.mdb import MongoDBConnector
+from agent.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
+from agent.db.mdb import MongoDBConnector
 
 # Initialize dotenv to load environment variables
 load_dotenv()

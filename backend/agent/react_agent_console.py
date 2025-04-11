@@ -1,11 +1,14 @@
 import os
 import asyncio
 from dotenv import load_dotenv
-from agent_llm import get_llm
+
+from agent.bedrock.client import BedrockClient
+from langchain_aws import ChatBedrock
+
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain.tools import tool
-from tools.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
-from tools.db.mdb import MongoDBConnector
+from agent.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
+from agent.db.mdb import MongoDBConnector
 
 from datetime import datetime, timezone
 
@@ -31,8 +34,13 @@ load_dotenv()
 # Initialize Rich for better output formatting and visualization
 rich = Console()
 
+# Instantiate Bedrock client
+bedrock_client = BedrockClient()._get_bedrock_client()
+
 # Initialize ChatBedrock LLM
-llm = get_llm()
+llm = ChatBedrock(model=os.getenv("CHAT_COMPLETIONS_MODEL_ID"),
+                client=bedrock_client,
+                temperature=0)
 
 # Initialize TavilySearchResults for market news and analysis
 tavily = TavilySearchResults(max_results=3)
@@ -668,7 +676,3 @@ async def main():
             # Process the checkpoints from the memory in an async way
             await process_checkpoints(checkpoints)
 
-
-if __name__ == "__main__":
-    # Run the main async function
-    asyncio.run(main())

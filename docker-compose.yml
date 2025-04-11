@@ -1,10 +1,10 @@
 services:
-  capitalmarkets-agents-backend:
+  capitalmarkets-agent-chatbot-backend:
     build:
       context: .
       no_cache: true
       dockerfile: Dockerfile.backend
-    image: capitalmarkets-agents-image-backend:latest
+    image: capitalmarkets-agent-chatbot-image-backend:latest
     volumes:
       - ~/.aws/credentials:/root/.aws/credentials:ro
       - ~/.aws/config:/root/.aws/config:ro
@@ -12,4 +12,4 @@ services:
     ports:
       - "8000:8000"
     restart: always
-    container_name: capitalmarkets-agents-backend-container
+    container_name: capitalmarkets-agent-chatbot-container

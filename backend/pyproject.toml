@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "your-virtual-env"
 version = "0.1.0"
-description = "This repository hosts the backend for the Capital Markets Agents service."
+description = "This repository hosts the backend for the Capital Markets React Agent Chatbot."
 authors = ["Julian Boronat <julian.boronat@mongodb.com>"]
 readme = "README.md"
 
@@ -13,20 +13,13 @@ fastapi = "^0.115.4"
 uvicorn = "^0.32.0"
 boto3 = "^1.35.70"
 botocore = "^1.35.70"
-tqdm = "^4.67.1"
-transformers = "^4.49.0"
-torch = "^2.6.0"
-yfinance = "^0.2.54"
-pandas = "^2.2.3"
 langchain-aws = "^0.2.15"
 langchain-mongodb = "^0.5.0"
 langgraph = "^0.3.5"
-grandalf = "^0.8"
 langchain-community = "^0.3.20"
 voyageai = "^0.3.2"
 langgraph-checkpoint-mongodb = "^0.1.3"
 rich = "13.9.4"
-scheduler = "^0.8.8"
 
 
 [build-system]
