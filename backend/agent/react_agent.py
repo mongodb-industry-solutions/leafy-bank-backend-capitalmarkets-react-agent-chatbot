@@ -3,16 +3,20 @@ from datetime import datetime, timezone
 import logging
 from dotenv import load_dotenv
 from langchain_aws import ChatBedrock
-from agents.tools.bedrock.client import BedrockClient
+from agent.bedrock.client import BedrockClient
 from pymongo import AsyncMongoClient
+
+# How to use MongoDB checkpointer for persistence:
+# https://langchain-ai.github.io/langgraph/how-tos/persistence_mongodb/
 from langgraph.checkpoint.mongodb.aio import AsyncMongoDBSaver
+
 # How to use the pre-built ReAct agent:
 # https://langchain-ai.github.io/langgraph/how-tos/create-react-agent/
 from langgraph.prebuilt import create_react_agent
-from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.messages import HumanMessage
 
 # Tools
-from agents.react_agent_market_assistant_tools import tavily_search_tool, market_analysis_reports_vector_search_tool, market_news_reports_vector_search_tool
+from agent.react_agent_tools import tavily_search_tool, market_analysis_reports_vector_search_tool, market_news_reports_vector_search_tool
 
 # Initialize dotenv to load environment variables
 load_dotenv()
@@ -66,61 +70,6 @@ class MarketAssistantReactAgent:
         
         logger.info("MarketAssistantReactAgent initialized with LangGraph agent and tools")
     
-    def generate_thread_id(self):
-        """Generate a unique thread_id based on current timestamp."""
-        return f"thread_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
-    
-    async def list_available_threads(self, limit=3):
-        """
-        List the most recent thread_ids from the MongoDB memory store.
-        
-        Args:
-            limit (int): Maximum number of threads to return (default: 3)
-            
-        Returns:
-            list: List of the most recent thread_ids
-        """
-        threads = []
-        try:
-            # First approach: try to get distinct thread_ids directly
-            try:
-                distinct_threads = await self.async_mongodb_memory_collection.distinct("thread_id")
-                # Sort by extracting timestamp from thread_id format (thread_YYYYMMDD_HHMMSS)
-                sorted_threads = sorted(
-                    [t for t in distinct_threads if t and t != "null"],
-                    key=lambda x: x.split('_')[1:] if len(x.split('_')) >= 3 else "",
-                    reverse=True
-                )
-                return sorted_threads[:limit]
-            except Exception as e1:
-                logger.error(f"Error with distinct query: {str(e1)}")
-            
-            # Second approach: try using find() instead of aggregate
-            try:
-                cursor = self.async_mongodb_memory_collection.find(
-                    {"thread_id": {"$ne": None}},
-                    {"thread_id": 1, "_id": 0}
-                ).sort("_id", -1).limit(limit * 10)  # Get more than needed to account for duplicates
-                
-                thread_set = set()
-                async for doc in cursor:
-                    thread_id = doc.get("thread_id")
-                    if thread_id and thread_id != "null" and thread_id not in thread_set:
-                        thread_set.add(thread_id)
-                        threads.append(thread_id)
-                        if len(threads) >= limit:
-                            break
-                
-                return threads
-            except Exception as e2:
-                logger.error(f"Error with find query: {str(e2)}")
-                
-        except Exception as e:
-            logger.error(f"Error retrieving thread IDs: {str(e)}")
-        
-        # If all methods fail, return an empty list
-        return threads
-    
     async def cleanup_old_threads(self, keep_threads=None):
         """
         Clean up old threads from the memory collections.
@@ -150,107 +99,6 @@ class MarketAssistantReactAgent:
             logger.error(f"Error cleaning up old threads: {str(e)}")
             return 0
     
-    async def create_new_session(self):
-        """
-        Create a new chat session and clean up older threads.
-        
-        Returns:
-            dict: Information about the new session
-        """
-        # Generate a new thread_id for a new chat session
-        thread_id = self.generate_thread_id()
-        
-        # Clean up older threads, keeping only the 2 most recent ones (plus this new one)
-        threads = await self.list_available_threads(limit=2)
-        if threads:
-            threads.append(thread_id)  # Also keep the new thread
-            deleted_count = await self.cleanup_old_threads(keep_threads=threads)
-            if deleted_count > 0:
-                logger.info(f"Cleaned up {deleted_count} older memory records.")
-        
-        return {
-            "status": "success",
-            "thread_id": thread_id,
-            "message": "New chat session created"
-        }
-    
-    async def continue_session(self, thread_selection=None):
-        """
-        Continue an existing chat session or create a new one if none exists.
-        
-        Args:
-            thread_selection: ID of thread to continue (if None, a list of threads will be returned)
-            
-        Returns:
-            dict: Information about the selected session or available sessions
-        """
-        # Get only the 3 most recent threads
-        threads = await self.list_available_threads(limit=3)
-        
-        # Clean up older threads
-        if threads:
-            deleted_count = await self.cleanup_old_threads(keep_threads=threads)
-            if deleted_count > 0:
-                logger.info(f"Cleaned up {deleted_count} older memory records.")
-        
-        if not threads:
-            # No existing sessions, create a new one
-            thread_id = self.generate_thread_id()
-            return {
-                "status": "success",
-                "thread_id": thread_id,
-                "message": "No existing chat sessions found. Created a new one."
-            }
-        
-        # If no specific thread was selected, return the list of available threads
-        if thread_selection is None:
-            formatted_threads = []
-            for i, thread in enumerate(threads, 1):
-                # Try to extract the datetime from the thread_id for a more readable format
-                try:
-                    date_part = thread.split('_')[1]
-                    time_part = thread.split('_')[2]
-                    formatted_date = f"{date_part[:4]}-{date_part[4:6]}-{date_part[6:]} {time_part[:2]}:{time_part[2:4]}:{time_part[4:]}"
-                    formatted_threads.append({
-                        "id": thread,
-                        "display": f"Session from {formatted_date}",
-                        "timestamp": formatted_date
-                    })
-                except:
-                    formatted_threads.append({
-                        "id": thread,
-                        "display": thread,
-                        "timestamp": ""
-                    })
-            
-            return {
-                "status": "success",
-                "available_threads": formatted_threads,
-                "message": "Available chat sessions retrieved"
-            }
-        
-        # Otherwise, use the selected thread
-        if thread_selection.isdigit() and 0 < int(thread_selection) <= len(threads):
-            # Selection is a number index
-            thread_id = threads[int(thread_selection) - 1]
-        elif thread_selection in threads:
-            # Selection is one of the actual thread_ids in the list
-            thread_id = thread_selection
-        else:
-            # Invalid selection, create a new session
-            thread_id = self.generate_thread_id()
-            return {
-                "status": "success",
-                "thread_id": thread_id,
-                "message": "Invalid selection. Created a new session."
-            }
-        
-        return {
-            "status": "success",
-            "thread_id": thread_id,
-            "message": f"Continuing chat session {thread_id}"
-        }
-    
     async def clear_all_memory(self):
         """
         Clear all chat memory.
@@ -259,12 +107,10 @@ class MarketAssistantReactAgent:
             dict: Information about the operation
         """
         deleted_count = await self.cleanup_old_threads()
-        thread_id = self.generate_thread_id()
         
         return {
             "status": "success",
             "deleted_count": deleted_count,
-            "thread_id": thread_id,
             "message": f"Deleted {deleted_count} memory records. All chat history has been cleared."
         }
         
@@ -286,7 +132,7 @@ class MarketAssistantReactAgent:
                 "status": "success",
                 "message_type": "system",
                 "final_answer": result["message"],
-                "thread_id": result["thread_id"]
+                "thread_id": thread_id
             }
         
         # Process the message with the agent
@@ -348,7 +194,7 @@ class MarketAssistantReactAgent:
                                     "id": tool_call.get("id", "")
                                 })
                                 
-                                logger.info(f"Tool called (direct): {tool_name} with query: {tool_query[:100]}...")
+                                logger.info(f"Tool called (direct): {tool_name} with query: {tool_query[:50]}...")
                         
                         # Also check the additional_kwargs approach as fallback
                         elif hasattr(message, "additional_kwargs") and "tool_calls" in message.additional_kwargs:
@@ -381,7 +227,6 @@ class MarketAssistantReactAgent:
                             final_answer = message.content
             
             # Find the final answer in the last step if not already captured
-            # The "thoughts" issue was happening because detailed final answers were being misclassified
             if not final_answer:
                 async for checkpoint_tuple in self.memory.alist({"configurable": {"thread_id": thread_id}}):
                     if "channel_values" in checkpoint_tuple.checkpoint:
