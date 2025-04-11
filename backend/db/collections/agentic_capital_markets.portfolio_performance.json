@@ -1,0 +1,1370 @@
+[{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d1f5"
+  },
+  "date": {
+    "$date": "2024-11-19T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.55,
+  "percentage_of_cumulative_return": 0
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d1f6"
+  },
+  "date": {
+    "$date": "2024-11-20T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.09,
+  "percentage_of_cumulative_return": 0.55
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d1f7"
+  },
+  "date": {
+    "$date": "2024-11-21T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.7,
+  "percentage_of_cumulative_return": 0.46
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d1f8"
+  },
+  "date": {
+    "$date": "2024-11-22T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.57,
+  "percentage_of_cumulative_return": 1.16
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d1f9"
+  },
+  "date": {
+    "$date": "2024-11-25T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.18,
+  "percentage_of_cumulative_return": 2.75
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d1fa"
+  },
+  "date": {
+    "$date": "2024-11-26T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.18,
+  "percentage_of_cumulative_return": 2.56
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d1fb"
+  },
+  "date": {
+    "$date": "2024-11-27T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.63,
+  "percentage_of_cumulative_return": 2.37
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d1fc"
+  },
+  "date": {
+    "$date": "2024-11-28T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.82,
+  "percentage_of_cumulative_return": 4.04
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d1fd"
+  },
+  "date": {
+    "$date": "2024-11-29T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.42,
+  "percentage_of_cumulative_return": 4.89
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d1fe"
+  },
+  "date": {
+    "$date": "2024-12-02T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.59,
+  "percentage_of_cumulative_return": 4.45
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d1ff"
+  },
+  "date": {
+    "$date": "2024-12-03T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.41,
+  "percentage_of_cumulative_return": 5.07
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d200"
+  },
+  "date": {
+    "$date": "2024-12-04T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.42,
+  "percentage_of_cumulative_return": 4.63
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d201"
+  },
+  "date": {
+    "$date": "2024-12-05T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.29,
+  "percentage_of_cumulative_return": 4.2
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d202"
+  },
+  "date": {
+    "$date": "2024-12-06T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.86,
+  "percentage_of_cumulative_return": 4.5
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d203"
+  },
+  "date": {
+    "$date": "2024-12-09T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.67,
+  "percentage_of_cumulative_return": 2.56
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d204"
+  },
+  "date": {
+    "$date": "2024-12-10T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.51,
+  "percentage_of_cumulative_return": 0.84
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d205"
+  },
+  "date": {
+    "$date": "2024-12-11T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.96,
+  "percentage_of_cumulative_return": 0.32
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d206"
+  },
+  "date": {
+    "$date": "2024-12-12T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.36,
+  "percentage_of_cumulative_return": -0.64
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d207"
+  },
+  "date": {
+    "$date": "2024-12-13T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.86,
+  "percentage_of_cumulative_return": -0.28
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d208"
+  },
+  "date": {
+    "$date": "2024-12-16T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.36,
+  "percentage_of_cumulative_return": -1.14
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d209"
+  },
+  "date": {
+    "$date": "2024-12-17T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.52,
+  "percentage_of_cumulative_return": -2.48
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d20a"
+  },
+  "date": {
+    "$date": "2024-12-18T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.18,
+  "percentage_of_cumulative_return": -1.01
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d20b"
+  },
+  "date": {
+    "$date": "2024-12-19T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.12,
+  "percentage_of_cumulative_return": -1.18
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d20c"
+  },
+  "date": {
+    "$date": "2024-12-20T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.37,
+  "percentage_of_cumulative_return": -1.06
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d20d"
+  },
+  "date": {
+    "$date": "2024-12-23T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.49,
+  "percentage_of_cumulative_return": -2.42
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d20e"
+  },
+  "date": {
+    "$date": "2024-12-24T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.16,
+  "percentage_of_cumulative_return": -2.91
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d20f"
+  },
+  "date": {
+    "$date": "2024-12-25T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.1,
+  "percentage_of_cumulative_return": -2.75
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d210"
+  },
+  "date": {
+    "$date": "2024-12-26T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.43,
+  "percentage_of_cumulative_return": -3.82
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d211"
+  },
+  "date": {
+    "$date": "2024-12-27T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.55,
+  "percentage_of_cumulative_return": -3.41
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d212"
+  },
+  "date": {
+    "$date": "2024-12-30T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.24,
+  "percentage_of_cumulative_return": -3.94
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d213"
+  },
+  "date": {
+    "$date": "2024-12-31T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.55,
+  "percentage_of_cumulative_return": -4.18
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d214"
+  },
+  "date": {
+    "$date": "2025-01-01T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.9,
+  "percentage_of_cumulative_return": -4.7
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d215"
+  },
+  "date": {
+    "$date": "2025-01-02T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.04,
+  "percentage_of_cumulative_return": -2.89
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d216"
+  },
+  "date": {
+    "$date": "2025-01-03T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.01,
+  "percentage_of_cumulative_return": -2.86
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d217"
+  },
+  "date": {
+    "$date": "2025-01-06T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.87,
+  "percentage_of_cumulative_return": -3.83
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d218"
+  },
+  "date": {
+    "$date": "2025-01-07T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.17,
+  "percentage_of_cumulative_return": -3
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d219"
+  },
+  "date": {
+    "$date": "2025-01-08T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.26,
+  "percentage_of_cumulative_return": -4.13
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d21a"
+  },
+  "date": {
+    "$date": "2025-01-09T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.91,
+  "percentage_of_cumulative_return": -3.88
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d21b"
+  },
+  "date": {
+    "$date": "2025-01-10T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.28,
+  "percentage_of_cumulative_return": -5.72
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d21c"
+  },
+  "date": {
+    "$date": "2025-01-13T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.25,
+  "percentage_of_cumulative_return": -6.92
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d21d"
+  },
+  "date": {
+    "$date": "2025-01-14T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.79,
+  "percentage_of_cumulative_return": -6.69
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d21e"
+  },
+  "date": {
+    "$date": "2025-01-15T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.22,
+  "percentage_of_cumulative_return": -5.96
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d21f"
+  },
+  "date": {
+    "$date": "2025-01-16T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.07,
+  "percentage_of_cumulative_return": -5.75
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d220"
+  },
+  "date": {
+    "$date": "2025-01-17T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.25,
+  "percentage_of_cumulative_return": -5.81
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d221"
+  },
+  "date": {
+    "$date": "2025-01-20T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.43,
+  "percentage_of_cumulative_return": -6.05
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d222"
+  },
+  "date": {
+    "$date": "2025-01-21T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.67,
+  "percentage_of_cumulative_return": -7.39
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d223"
+  },
+  "date": {
+    "$date": "2025-01-22T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.41,
+  "percentage_of_cumulative_return": -8.01
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d224"
+  },
+  "date": {
+    "$date": "2025-01-23T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.11,
+  "percentage_of_cumulative_return": -8.39
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d225"
+  },
+  "date": {
+    "$date": "2025-01-24T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.39,
+  "percentage_of_cumulative_return": -7.37
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d226"
+  },
+  "date": {
+    "$date": "2025-01-27T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.71,
+  "percentage_of_cumulative_return": -7.01
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d227"
+  },
+  "date": {
+    "$date": "2025-01-28T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.37,
+  "percentage_of_cumulative_return": -8.6
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d228"
+  },
+  "date": {
+    "$date": "2025-01-29T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.34,
+  "percentage_of_cumulative_return": -8.26
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d229"
+  },
+  "date": {
+    "$date": "2025-01-30T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.63,
+  "percentage_of_cumulative_return": -8.57
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d22a"
+  },
+  "date": {
+    "$date": "2025-01-31T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.66,
+  "percentage_of_cumulative_return": -9.14
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d22b"
+  },
+  "date": {
+    "$date": "2025-02-03T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.08,
+  "percentage_of_cumulative_return": -8.54
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d22c"
+  },
+  "date": {
+    "$date": "2025-02-04T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.98,
+  "percentage_of_cumulative_return": -7.55
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d22d"
+  },
+  "date": {
+    "$date": "2025-02-05T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.79,
+  "percentage_of_cumulative_return": -6.64
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d22e"
+  },
+  "date": {
+    "$date": "2025-02-06T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.26,
+  "percentage_of_cumulative_return": -7.38
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d22f"
+  },
+  "date": {
+    "$date": "2025-02-07T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.38,
+  "percentage_of_cumulative_return": -7.62
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d230"
+  },
+  "date": {
+    "$date": "2025-02-10T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.03,
+  "percentage_of_cumulative_return": -7.27
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d231"
+  },
+  "date": {
+    "$date": "2025-02-11T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.43,
+  "percentage_of_cumulative_return": -6.32
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d232"
+  },
+  "date": {
+    "$date": "2025-02-12T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.14,
+  "percentage_of_cumulative_return": -6.72
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d233"
+  },
+  "date": {
+    "$date": "2025-02-13T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.06,
+  "percentage_of_cumulative_return": -6.85
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d234"
+  },
+  "date": {
+    "$date": "2025-02-14T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.15,
+  "percentage_of_cumulative_return": -7.83
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d235"
+  },
+  "date": {
+    "$date": "2025-02-17T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.86,
+  "percentage_of_cumulative_return": -8.89
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d236"
+  },
+  "date": {
+    "$date": "2025-02-18T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.55,
+  "percentage_of_cumulative_return": 0
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d237"
+  },
+  "date": {
+    "$date": "2025-02-19T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.09,
+  "percentage_of_cumulative_return": 0.55
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d238"
+  },
+  "date": {
+    "$date": "2025-02-20T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.7,
+  "percentage_of_cumulative_return": 0.46
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d239"
+  },
+  "date": {
+    "$date": "2025-02-21T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.57,
+  "percentage_of_cumulative_return": 1.16
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d23a"
+  },
+  "date": {
+    "$date": "2025-02-22T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.18,
+  "percentage_of_cumulative_return": 2.75
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d23b"
+  },
+  "date": {
+    "$date": "2025-02-23T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.18,
+  "percentage_of_cumulative_return": 2.56
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d23c"
+  },
+  "date": {
+    "$date": "2025-02-24T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.63,
+  "percentage_of_cumulative_return": 2.37
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d23d"
+  },
+  "date": {
+    "$date": "2025-02-25T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.82,
+  "percentage_of_cumulative_return": 4.04
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d23e"
+  },
+  "date": {
+    "$date": "2025-02-26T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.42,
+  "percentage_of_cumulative_return": 4.89
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d23f"
+  },
+  "date": {
+    "$date": "2025-02-27T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.59,
+  "percentage_of_cumulative_return": 4.45
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d240"
+  },
+  "date": {
+    "$date": "2025-02-28T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.41,
+  "percentage_of_cumulative_return": 5.07
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d241"
+  },
+  "date": {
+    "$date": "2025-03-01T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.42,
+  "percentage_of_cumulative_return": 4.63
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d242"
+  },
+  "date": {
+    "$date": "2025-03-02T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.29,
+  "percentage_of_cumulative_return": 4.2
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d243"
+  },
+  "date": {
+    "$date": "2025-03-03T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.86,
+  "percentage_of_cumulative_return": 4.5
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d244"
+  },
+  "date": {
+    "$date": "2025-03-04T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.67,
+  "percentage_of_cumulative_return": 2.56
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d245"
+  },
+  "date": {
+    "$date": "2025-03-05T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.51,
+  "percentage_of_cumulative_return": 0.84
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d246"
+  },
+  "date": {
+    "$date": "2025-03-06T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.96,
+  "percentage_of_cumulative_return": 0.32
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d247"
+  },
+  "date": {
+    "$date": "2025-03-07T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.36,
+  "percentage_of_cumulative_return": -0.64
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d248"
+  },
+  "date": {
+    "$date": "2025-03-08T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.86,
+  "percentage_of_cumulative_return": -0.28
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d249"
+  },
+  "date": {
+    "$date": "2025-03-09T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.36,
+  "percentage_of_cumulative_return": -1.14
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d24a"
+  },
+  "date": {
+    "$date": "2025-03-10T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.52,
+  "percentage_of_cumulative_return": -2.48
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d24b"
+  },
+  "date": {
+    "$date": "2025-03-11T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.18,
+  "percentage_of_cumulative_return": -1.01
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d24c"
+  },
+  "date": {
+    "$date": "2025-03-12T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.12,
+  "percentage_of_cumulative_return": -1.18
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d24d"
+  },
+  "date": {
+    "$date": "2025-03-13T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.37,
+  "percentage_of_cumulative_return": -1.06
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d24e"
+  },
+  "date": {
+    "$date": "2025-03-14T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.49,
+  "percentage_of_cumulative_return": -2.42
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d24f"
+  },
+  "date": {
+    "$date": "2025-03-15T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.16,
+  "percentage_of_cumulative_return": -2.91
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d250"
+  },
+  "date": {
+    "$date": "2025-03-16T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.1,
+  "percentage_of_cumulative_return": -2.75
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d251"
+  },
+  "date": {
+    "$date": "2025-03-17T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.43,
+  "percentage_of_cumulative_return": -3.82
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d252"
+  },
+  "date": {
+    "$date": "2025-03-18T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.55,
+  "percentage_of_cumulative_return": -3.41
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d253"
+  },
+  "date": {
+    "$date": "2025-03-19T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.24,
+  "percentage_of_cumulative_return": -3.94
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d254"
+  },
+  "date": {
+    "$date": "2025-03-20T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.55,
+  "percentage_of_cumulative_return": -4.18
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d255"
+  },
+  "date": {
+    "$date": "2025-03-21T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.9,
+  "percentage_of_cumulative_return": -4.7
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d256"
+  },
+  "date": {
+    "$date": "2025-03-22T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.04,
+  "percentage_of_cumulative_return": -2.89
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d257"
+  },
+  "date": {
+    "$date": "2025-03-23T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.01,
+  "percentage_of_cumulative_return": -2.86
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d258"
+  },
+  "date": {
+    "$date": "2025-03-24T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.87,
+  "percentage_of_cumulative_return": -3.83
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d259"
+  },
+  "date": {
+    "$date": "2025-03-25T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.17,
+  "percentage_of_cumulative_return": -3
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d25a"
+  },
+  "date": {
+    "$date": "2025-03-26T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.22,
+  "percentage_of_cumulative_return": -5.96
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d25b"
+  },
+  "date": {
+    "$date": "2025-03-27T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.07,
+  "percentage_of_cumulative_return": -5.75
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d25c"
+  },
+  "date": {
+    "$date": "2025-03-28T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.25,
+  "percentage_of_cumulative_return": -5.81
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d25d"
+  },
+  "date": {
+    "$date": "2025-03-29T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.43,
+  "percentage_of_cumulative_return": -6.05
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d25e"
+  },
+  "date": {
+    "$date": "2025-03-30T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.67,
+  "percentage_of_cumulative_return": -7.39
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d25f"
+  },
+  "date": {
+    "$date": "2025-03-31T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.41,
+  "percentage_of_cumulative_return": -8.01
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d260"
+  },
+  "date": {
+    "$date": "2025-04-01T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.11,
+  "percentage_of_cumulative_return": -8.39
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d261"
+  },
+  "date": {
+    "$date": "2025-04-02T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.39,
+  "percentage_of_cumulative_return": -7.37
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d262"
+  },
+  "date": {
+    "$date": "2025-04-03T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.71,
+  "percentage_of_cumulative_return": -7.01
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d263"
+  },
+  "date": {
+    "$date": "2025-04-04T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.37,
+  "percentage_of_cumulative_return": -8.6
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d264"
+  },
+  "date": {
+    "$date": "2025-04-05T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.34,
+  "percentage_of_cumulative_return": -8.26
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d265"
+  },
+  "date": {
+    "$date": "2025-04-06T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.63,
+  "percentage_of_cumulative_return": -8.57
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d266"
+  },
+  "date": {
+    "$date": "2025-04-07T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.66,
+  "percentage_of_cumulative_return": -9.14
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d267"
+  },
+  "date": {
+    "$date": "2025-04-08T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.08,
+  "percentage_of_cumulative_return": -8.54
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d268"
+  },
+  "date": {
+    "$date": "2025-04-09T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.98,
+  "percentage_of_cumulative_return": -7.55
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d269"
+  },
+  "date": {
+    "$date": "2025-04-10T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.79,
+  "percentage_of_cumulative_return": -6.64
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d26a"
+  },
+  "date": {
+    "$date": "2025-04-11T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.26,
+  "percentage_of_cumulative_return": -7.38
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d26b"
+  },
+  "date": {
+    "$date": "2025-04-12T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.38,
+  "percentage_of_cumulative_return": -7.62
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d26c"
+  },
+  "date": {
+    "$date": "2025-04-13T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.03,
+  "percentage_of_cumulative_return": -7.27
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d26d"
+  },
+  "date": {
+    "$date": "2025-04-14T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.43,
+  "percentage_of_cumulative_return": -6.32
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d26e"
+  },
+  "date": {
+    "$date": "2025-04-15T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.14,
+  "percentage_of_cumulative_return": -6.72
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d26f"
+  },
+  "date": {
+    "$date": "2025-04-16T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.06,
+  "percentage_of_cumulative_return": -6.85
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d270"
+  },
+  "date": {
+    "$date": "2025-04-17T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -1.15,
+  "percentage_of_cumulative_return": -7.83
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d271"
+  },
+  "date": {
+    "$date": "2025-04-18T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.86,
+  "percentage_of_cumulative_return": -8.89
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d272"
+  },
+  "date": {
+    "$date": "2025-04-19T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.55,
+  "percentage_of_cumulative_return": 0
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d273"
+  },
+  "date": {
+    "$date": "2025-04-20T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.09,
+  "percentage_of_cumulative_return": 0.55
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d274"
+  },
+  "date": {
+    "$date": "2025-04-21T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.7,
+  "percentage_of_cumulative_return": 0.46
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d275"
+  },
+  "date": {
+    "$date": "2025-04-22T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.57,
+  "percentage_of_cumulative_return": 1.16
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d276"
+  },
+  "date": {
+    "$date": "2025-04-23T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.18,
+  "percentage_of_cumulative_return": 2.75
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d277"
+  },
+  "date": {
+    "$date": "2025-04-24T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.18,
+  "percentage_of_cumulative_return": 2.56
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d278"
+  },
+  "date": {
+    "$date": "2025-04-25T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 1.63,
+  "percentage_of_cumulative_return": 2.37
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d279"
+  },
+  "date": {
+    "$date": "2025-04-26T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.82,
+  "percentage_of_cumulative_return": 4.04
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d27a"
+  },
+  "date": {
+    "$date": "2025-04-27T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.42,
+  "percentage_of_cumulative_return": 4.89
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d27b"
+  },
+  "date": {
+    "$date": "2025-04-28T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": 0.59,
+  "percentage_of_cumulative_return": 4.45
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d27c"
+  },
+  "date": {
+    "$date": "2025-04-29T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.41,
+  "percentage_of_cumulative_return": 5.07
+},
+{
+  "_id": {
+    "$oid": "67ebe907afd88e79d7d3d27d"
+  },
+  "date": {
+    "$date": "2025-04-30T00:00:00.000Z"
+  },
+  "percentage_of_daily_return": -0.42,
+  "percentage_of_cumulative_return": 4.63
+}]

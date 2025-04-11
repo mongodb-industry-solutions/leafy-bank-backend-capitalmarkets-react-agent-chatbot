@@ -1,0 +1,100 @@
+[{
+  "_id": {
+    "$oid": "67cb15c3112d278f5ddef491"
+  },
+  "symbol": "SPY",
+  "allocation_percentage": "25%",
+  "allocation_number": 25,
+  "allocation_decimal": 0.25,
+  "description": "S&P 500 ETF"
+},
+{
+  "_id": {
+    "$oid": "67cb15c3112d278f5ddef492"
+  },
+  "symbol": "QQQ",
+  "allocation_percentage": "20%",
+  "allocation_number": 20,
+  "allocation_decimal": 0.2,
+  "description": "Nasdaq ETF"
+},
+{
+  "_id": {
+    "$oid": "67cb15c3112d278f5ddef493"
+  },
+  "symbol": "EEM",
+  "allocation_percentage": "8%",
+  "allocation_number": 8,
+  "allocation_decimal": 0.08,
+  "description": "Emerging Markets ETF"
+},
+{
+  "_id": {
+    "$oid": "67cb15c3112d278f5ddef494"
+  },
+  "symbol": "XLE",
+  "allocation_percentage": "5%",
+  "allocation_number": 5,
+  "allocation_decimal": 0.05,
+  "description": "Energy Sector ETF"
+},
+{
+  "_id": {
+    "$oid": "67cb15c3112d278f5ddef495"
+  },
+  "symbol": "TLT",
+  "allocation_percentage": "10%",
+  "allocation_number": 10,
+  "allocation_decimal": 0.1,
+  "description": "Long-Term Treasury Bonds"
+},
+{
+  "_id": {
+    "$oid": "67cb15c3112d278f5ddef496"
+  },
+  "symbol": "LQD",
+  "allocation_percentage": "7%",
+  "allocation_number": 7,
+  "allocation_decimal": 0.07,
+  "description": "Investment-Grade Bonds"
+},
+{
+  "_id": {
+    "$oid": "67cb15c3112d278f5ddef497"
+  },
+  "symbol": "HYG",
+  "allocation_percentage": "5%",
+  "allocation_number": 5,
+  "allocation_decimal": 0.05,
+  "description": "High-Yield Bonds"
+},
+{
+  "_id": {
+    "$oid": "67cb15c3112d278f5ddef498"
+  },
+  "symbol": "VNQ",
+  "allocation_percentage": "6%",
+  "allocation_number": 6,
+  "allocation_decimal": 0.06,
+  "description": "Real Estate ETF"
+},
+{
+  "_id": {
+    "$oid": "67cb15c3112d278f5ddef499"
+  },
+  "symbol": "GLD",
+  "allocation_percentage": "8%",
+  "allocation_number": 8,
+  "allocation_decimal": 0.08,
+  "description": "Gold ETF"
+},
+{
+  "_id": {
+    "$oid": "67cb15c3112d278f5ddef49a"
+  },
+  "symbol": "USO",
+  "allocation_percentage": "6%",
+  "allocation_number": 6,
+  "allocation_decimal": 0.06,
+  "description": "Oil ETF"
+}]
