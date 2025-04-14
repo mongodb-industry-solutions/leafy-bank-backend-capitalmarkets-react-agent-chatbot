@@ -19,7 +19,7 @@ router = APIRouter(prefix="/market-assistant", tags=["Market Assistant"])
 
 # Models for request/response
 class MessageRequest(BaseModel):
-    thread_id: str
+    thread_id: Optional[str] = None
     message: str
 
 class MessageResponse(BaseModel):
@@ -33,10 +33,17 @@ class MessageResponse(BaseModel):
 async def send_message(request: MessageRequest):
     """Send a message to the agent and get a response."""
     try:
-        result = await market_assistant_service.process_user_message(
-            request.thread_id, 
-            request.message
-        )
+        # NOTE: If the thread_id is None, the agent will create a new thread.
+        # If the thread_id is not None, the agent will continue the conversation in that thread.
+        if request.thread_id is None:
+            result = await market_assistant_service.process_user_message(
+                message_content=request.message
+            )
+        else:
+            result = await market_assistant_service.process_user_message(
+                message_content=request.message,
+                thread_id=request.thread_id
+            )
         return result
     except Exception as e:
         logger.error(f"Error processing message: {str(e)}")

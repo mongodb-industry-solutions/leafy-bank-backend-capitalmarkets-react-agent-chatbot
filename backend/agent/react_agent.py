@@ -69,8 +69,13 @@ class MarketAssistantReactAgent:
         )
         
         logger.info("MarketAssistantReactAgent initialized with LangGraph agent and tools")
+
+    @staticmethod
+    async def generate_thread_id():
+        """Generate a unique thread_id based on current timestamp"""
+        return f"thread_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
     
-    async def cleanup_old_threads(self, keep_threads=None):
+    async def cleanup_threads(self, keep_threads=None):
         """
         Clean up old threads from the memory collections.
         
@@ -106,25 +111,32 @@ class MarketAssistantReactAgent:
         Returns:
             dict: Information about the operation
         """
-        deleted_count = await self.cleanup_old_threads()
+        deleted_count = await self.cleanup_threads()
         
         return {
             "status": "success",
             "deleted_count": deleted_count,
             "message": f"Deleted {deleted_count} memory records. All chat history has been cleared."
         }
-        
-    async def process_user_message(self, thread_id, message_content):
+    
+    async def process_user_message(self, message_content, thread_id=None):
         """
         Process a user message and get the agent's response.
         
         Args:
-            thread_id (str): The ID of the thread for this conversation
+            thread_id (str): The ID of the thread for this conversation. If None, a new thread_id will be generated.
             message_content (str): The content of the user's message
             
         Returns:
             dict: The agent's response and any tool calls made
         """
+        # Generate a new thread_id if not provided
+        if thread_id is None:
+            thread_id = await self.generate_thread_id()
+            logger.info(f"Generated new thread_id: {thread_id}")
+        else:
+            logger.info(f"Using provided thread_id: {thread_id}")
+
         # Check for special commands
         if message_content.lower() == "clear all memory":
             result = await self.clear_all_memory()
