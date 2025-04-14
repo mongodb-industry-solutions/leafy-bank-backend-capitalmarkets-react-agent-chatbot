@@ -1,10 +1,11 @@
 import logging
-from fastapi import FastAPI, Request, APIRouter, HTTPException
+from fastapi import FastAPI, Request, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 
 # Add market assistant API router
 from api_market_assistant import router as market_assistant_router
+# Add checkpointer API router
+from api_checkpointer import router as checkpointer_router
 
 # Configure logging
 logging.basicConfig(
@@ -31,3 +32,5 @@ async def read_root(request: Request):
 
 # Add the market assistant router to the main app
 app.include_router(market_assistant_router)
+# Add the checkpointer router to the main app
+app.include_router(checkpointer_router)

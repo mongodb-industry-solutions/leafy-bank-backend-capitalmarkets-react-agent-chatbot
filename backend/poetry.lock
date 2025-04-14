@@ -2026,6 +2026,17 @@ files = [
 cli = ["click (>=5.0)"]
 
 [[package]]
+name = "pytz"
+version = "2025.2"
+description = "World timezone definitions, modern and historical"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pytz-2025.2-py2.py3-none-any.whl", hash = "sha256:5ddf76296dd8c44c26eb8f4b6f35488f3ccbf6fbbd7adee0b7262d43f0ec2f00"},
+    {file = "pytz-2025.2.tar.gz", hash = "sha256:360b9e3dbb49a209c21ad61809c7fb453643e048b38924c765813546746e81c3"},
+]
+
+[[package]]
 name = "pyyaml"
 version = "6.0.2"
 description = "YAML parser and emitter for Python"
@@ -2157,6 +2168,20 @@ botocore = ">=1.37.4,<2.0a.0"
 
 [package.extras]
 crt = ["botocore[crt] (>=1.37.4,<2.0a.0)"]
+
+[[package]]
+name = "scheduler"
+version = "0.8.8"
+description = "A simple in-process python scheduler library with asyncio, threading and timezone support."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "scheduler-0.8.8-py3-none-any.whl", hash = "sha256:8f52ea6390757e4f42a8becbcb474e7744a3082ea5e1cdb0c972ea8b2c5d1891"},
+    {file = "scheduler-0.8.8.tar.gz", hash = "sha256:4575a12cd269e4e4896409836fd911560cb63fb7634360ee62aa2fa4ec495ffd"},
+]
+
+[package.dependencies]
+typeguard = ">=3.0.0"
 
 [[package]]
 name = "six"
@@ -2359,6 +2384,24 @@ discord = ["requests"]
 notebook = ["ipywidgets (>=6)"]
 slack = ["slack-sdk"]
 telegram = ["requests"]
+
+[[package]]
+name = "typeguard"
+version = "4.4.2"
+description = "Run-time type checker for Python"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "typeguard-4.4.2-py3-none-any.whl", hash = "sha256:77a78f11f09777aeae7fa08585f33b5f4ef0e7335af40005b0c422ed398ff48c"},
+    {file = "typeguard-4.4.2.tar.gz", hash = "sha256:a6f1065813e32ef365bc3b3f503af8a96f9dd4e0033a02c28c4a4983de8c6c49"},
+]
+
+[package.dependencies]
+typing_extensions = ">=4.10.0"
+
+[package.extras]
+doc = ["Sphinx (>=7)", "packaging", "sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme (>=1.3.0)"]
+test = ["coverage[toml] (>=7)", "mypy (>=1.2.0)", "pytest (>=7)"]
 
 [[package]]
 name = "typing-extensions"
@@ -2805,4 +2848,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.11"
-content-hash = "e80d1cd9efb8199606ec04395f46c936c3fe8784b60f8d85c61670d84b581811"
+content-hash = "ecc8618188693c31845b894f6a8681f8c1239e189f5a08971386825de1005661"
