@@ -1,15 +1,8 @@
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
+from fastapi import APIRouter
 import logging
-from agent.react_agent import MarketAssistantReactAgent
 
 from checkpointer_memory_jobs import CheckpointerMemoryJobs
 import threading
-
-from datetime import timezone
-from scheduler import Scheduler
-import scheduler.trigger as trigger
-import pytz
 
 # Configure logging
 logging.basicConfig(
@@ -18,33 +11,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Initialize the service
-market_assistant_service = MarketAssistantReactAgent()
-
 # Create the router
 router = APIRouter(prefix="/checkpointer", tags=["Checkpointer"])
-
-# Define timezone
-UTC = pytz.UTC
-
-# Define the scheduler
-SCHEDULER = Scheduler(tzinfo=timezone.utc)
-
-class MessageResponse(BaseModel):
-    status: str
-    deleted_count: int
-    message: str
-
-
-@router.post("/clear-all-memory", response_model=MessageResponse)
-async def clear_all_memory():
-    """Clear all memory of the agent."""
-    try:
-        result = await market_assistant_service.clear_all_memory()
-        return result
-    except Exception as e:
-        logger.error(f"Error clearing all memory: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
 
 ############################
 ## -- LOADER SCHEDULER -- ##

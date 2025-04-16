@@ -11,12 +11,15 @@ from pymongo import AsyncMongoClient
 from langgraph.checkpoint.mongodb.aio import AsyncMongoDBSaver
 
 # How to use the pre-built ReAct agent:
-# https://langchain-ai.github.io/langgraph/how-tos/create-react-agent/
+# https://langchain-ai.github.io/langgraph/reference/prebuilt/#langgraph.prebuilt.chat_agent_executor.create_react_agent
 from langgraph.prebuilt import create_react_agent
 from langchain_core.messages import HumanMessage
 
+# Profile
+from agent.profiles import AgentProfiles
+
 # Tools
-from agent.react_agent_tools import tavily_search_tool, market_analysis_reports_vector_search_tool, market_news_reports_vector_search_tool
+from agent.react_agent_tools import tavily_search_tool, market_analysis_reports_vector_search_tool, market_news_reports_vector_search_tool, get_vix_closing_value_tool, get_portfolio_allocation_tool
 
 # Initialize dotenv to load environment variables
 load_dotenv()
@@ -42,6 +45,12 @@ class MarketAssistantReactAgent:
         self.database_name = os.getenv("DATABASE_NAME")
         self.checkpoints_collection = os.getenv("CHECKPOINTS_AIO_COLLECTION", "checkpoints_aio")
         self.checkpoint_writes_collection = os.getenv("CHECKPOINTS_WRITES_AIO_COLLECTION", "checkpoint_writes_aio")
+
+        # Get system prompt from AgentProfiles
+        self.agent_id = "MARKET_ASSISTANT_AGENT"
+        # Generate initial prompt
+        self.profiler = AgentProfiles()
+        self.prompt = self.profiler.generate_system_prompt(agent_id=self.agent_id)
         
         # Instantiate Bedrock client
         bedrock_client = BedrockClient()._get_bedrock_client()
@@ -60,10 +69,13 @@ class MarketAssistantReactAgent:
         # Create the agent with tools - done at initialization to avoid recreation
         self.langgraph_agent = create_react_agent(
             model=self.llm, 
+            prompt=self.prompt,
             tools=[
                 tavily_search_tool,
                 market_analysis_reports_vector_search_tool,
-                market_news_reports_vector_search_tool
+                market_news_reports_vector_search_tool,
+                get_vix_closing_value_tool,
+                get_portfolio_allocation_tool
             ],
             checkpointer=self.memory
         )
