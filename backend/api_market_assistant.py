@@ -48,3 +48,20 @@ async def send_message(request: MessageRequest):
     except Exception as e:
         logger.error(f"Error processing message: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+    
+
+class ClearAllMemoryResponse(BaseModel):
+    status: str
+    deleted_count: int
+    message: str
+
+
+@router.post("/clear-all-memory", response_model=ClearAllMemoryResponse)
+async def clear_all_memory():
+    """Clear all memory of the agent."""
+    try:
+        result = await market_assistant_service.clear_all_memory()
+        return result
+    except Exception as e:
+        logger.error(f"Error clearing all memory: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))

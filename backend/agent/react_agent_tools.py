@@ -371,3 +371,94 @@ def market_news_reports_vector_search_tool(query: str, k: int = 1):
     except Exception as e:
         logger.error(f"Error searching portfolio news reports: {str(e)}")
         return {"error": f"An error occurred: {str(e)}"}
+    
+@tool
+def get_vix_closing_value_tool(query: str) -> str:
+    """
+    Get the most recent closing value of the VIX index.
+
+    IMPORTANT: This tool provides the VIX index closing value.
+
+    Use this tool when you need:
+    - VIX index closing value OR VIX closing value today.
+
+    Args:
+        query (str): The search query related to VIX index closing value.
+    
+    Returns:
+        str: VIX index closing value answer.
+    """
+    try:
+        # Log the query
+        logger.info(f"Fetching VIX index closing because of query: {query}")
+
+        # Get the most recent document for context information
+        most_recent = market_reports_collection.find_one(
+            {}, 
+            sort=[("timestamp", -1)]
+        )
+        
+        if not most_recent:
+            return "VIX closing value not available. No market analysis reports found."
+        
+        # Extract the date of the most recent report
+        report = most_recent.get("report", {})
+        vix_closing_value = report.get("market_volatility_index", {}).get("fluctuation_answer", "")
+        
+        # Extract only the VIX close price part
+        if "VIX close price is" in vix_closing_value:
+            # Parse just the "VIX close price is X.XX" part
+            vix_part = vix_closing_value.split("(")[0].strip()
+            return vix_part
+        else:
+            return "VIX closing value is not available in the expected format."
+
+    except Exception as e:
+        logger.error(f"Error fetching VIX index closing value: {str(e)}")
+        return f"Unable to retrieve VIX closing value: {str(e)}"
+    
+
+@tool
+def get_portfolio_allocation_tool(query: str) -> dict:
+    """Get the most recent portfolio allocation.
+
+    IMPORTANT: This tool provides the most recent portfolio allocation.
+
+    Use this tool when you need:
+    - Portfolio allocation for the current portfolio.
+    - Asset distribution information
+    - Current investment breakdown
+
+    Args:
+        query (str): The search query related to portfolio allocation.
+
+    Returns:
+        dict: Portfolio allocation showing assets, descriptions, and percentages.
+    """
+    try:
+        # Log the query
+        logger.info(f"Fetching portfolio allocation because of query: {query}")
+
+        # Get the most recent document for context information
+        most_recent = market_reports_collection.find_one(
+            {}, 
+            sort=[("timestamp", -1)]
+        )
+        
+        if not most_recent:
+            return {"error": "Portfolio allocation not available. No market analysis reports found."}
+        
+        # Extract the portfolio allocation data
+        portfolio_allocation = most_recent.get("portfolio_allocation", [])
+        
+        if not portfolio_allocation:
+            return {"error": "Portfolio allocation data not found in the most recent report."}
+        
+        # Return the simplified portfolio allocation data
+        return {
+            "portfolio_allocation": portfolio_allocation,
+        }
+    
+    except Exception as e:
+        logger.error(f"Error fetching portfolio allocation: {str(e)}")
+        return {"error": f"Unable to retrieve portfolio allocation: {str(e)}"}
