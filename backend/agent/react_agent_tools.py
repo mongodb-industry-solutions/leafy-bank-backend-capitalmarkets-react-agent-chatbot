@@ -1,5 +1,6 @@
 import os
 import logging
+import datetime
 from dotenv import load_dotenv
 from langchain.tools import tool
 from langchain_community.tools.tavily_search import TavilySearchResults
@@ -23,9 +24,10 @@ tavily_search_tool = TavilySearchResults(max_results=3)
 embedding_model_id = os.getenv("EMBEDDINGS_MODEL_ID", "voyage-finance-2")
 ve = VogayeAIEmbeddings(api_key=os.getenv("VOYAGE_API_KEY"))
 
-# Initialize MongoDB collections for reports
+# Getting environment variables for MongoDB collections
 MARKET_COLLECTION_NAME = os.getenv("REPORTS_COLLECTION_MARKET_ANALYSIS", "reports_market_analysis")
 NEWS_COLLECTION_NAME = os.getenv("REPORTS_COLLECTION_MARKET_NEWS", "reports_market_news")
+PORTFOLIO_PERFORMANCE_COLLECTION_NAME = os.getenv("PORTFOLIO_PERFORMANCE_COLLECTION", "portfolio_performance")
 
 # Initialize MongoDB connector
 mongodb_connector = MongoDBConnector()
@@ -33,6 +35,9 @@ mongodb_connector = MongoDBConnector()
 # Get the collections for market and news reports
 market_reports_collection = mongodb_connector.get_collection(collection_name=MARKET_COLLECTION_NAME)
 news_reports_collection = mongodb_connector.get_collection(collection_name=NEWS_COLLECTION_NAME)
+
+# Get portfolio performance collection
+portfolio_performance_collection = mongodb_connector.get_collection(PORTFOLIO_PERFORMANCE_COLLECTION_NAME)
 
 # Getting environment variables for vector index names
 REPORT_MARKET_ANALISYS_VECTOR_INDEX_NAME = os.getenv("REPORT_MARKET_ANALISYS_VECTOR_INDEX_NAME")
@@ -138,8 +143,7 @@ def market_analysis_reports_vector_search_tool(query: str, k: int = 1):
             }
         
         # Re-rank results by combining vector similarity score with recency
-        import datetime
-        now = datetime.datetime.utcnow()
+        now = datetime.datetime.now(datetime.timezone.utc)
         
         # Make sure most recent is always in the results
         most_recent_in_results = False
@@ -300,7 +304,6 @@ def market_news_reports_vector_search_tool(query: str, k: int = 1):
             }
         
         # Re-rank results by combining vector similarity score with recency
-        import datetime
         now = datetime.datetime.utcnow()
         
         # Make sure most recent is always in the results
@@ -462,3 +465,69 @@ def get_portfolio_allocation_tool(query: str) -> dict:
     except Exception as e:
         logger.error(f"Error fetching portfolio allocation: {str(e)}")
         return {"error": f"Unable to retrieve portfolio allocation: {str(e)}"}
+    
+
+@tool
+def get_portfolio_ytd_return_tool(query: str) -> str:
+    """
+    Get the Year-to-Date (YTD) rate of return for the portfolio.
+
+    IMPORTANT: This tool provides the YTD performance of the current portfolio.
+
+    Use this tool when you need:
+    - Year-to-date return of the portfolio
+    - YTD portfolio performance 
+    - How the portfolio has performed since the beginning of this year
+
+    Args:
+        query (str): The search query related to portfolio YTD return.
+
+    Returns:
+        str: Portfolio YTD return percentage and information.
+    """
+    try:
+        # Log the query
+        logger.info(f"Calculating portfolio YTD return for query: {query}")
+        
+        # Get current date information
+        current_date = datetime.datetime.now()
+        current_year = current_date.year
+        
+        # Find the first trading day entry of the current year
+        start_of_year = datetime.datetime(current_year, 1, 1)
+        first_entry_of_year = portfolio_performance_collection.find_one(
+            {"date": {"$gte": start_of_year}},
+            sort=[("date", 1)]
+        )
+        
+        if not first_entry_of_year:
+            return "Could not find portfolio data for the current year."
+        
+        # Get the most recent entry
+        latest_entry = portfolio_performance_collection.find_one(
+            {}, 
+            sort=[("date", -1)]
+        )
+        
+        if not latest_entry:
+            return "Could not find recent portfolio performance data."
+            
+        # Extract start and end dates for better context
+        start_date = first_entry_of_year.get("date").strftime("%Y-%m-%d")
+        end_date = latest_entry.get("date").strftime("%Y-%m-%d")
+        
+        # Extract cumulative returns
+        start_cumulative_return = first_entry_of_year.get("percentage_of_cumulative_return", 0)
+        end_cumulative_return = latest_entry.get("percentage_of_cumulative_return", 0)
+        
+        # Calculate YTD return
+        ytd_return = end_cumulative_return - start_cumulative_return
+        
+        # Format the response with detailed information
+        return (f"The portfolio's YTD return from {start_date} to {end_date} is {ytd_return:.2f}%. "
+                f"(Starting cumulative return: {start_cumulative_return:.2f}%, "
+                f"Current cumulative return: {end_cumulative_return:.2f}%)")
+        
+    except Exception as e:
+        logger.error(f"Error calculating portfolio YTD return: {str(e)}")
+        return f"Unable to calculate YTD return: {str(e)}"

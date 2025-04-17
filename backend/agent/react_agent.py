@@ -19,7 +19,7 @@ from langchain_core.messages import HumanMessage
 from agent.profiles import AgentProfiles
 
 # Tools
-from agent.react_agent_tools import tavily_search_tool, market_analysis_reports_vector_search_tool, market_news_reports_vector_search_tool, get_vix_closing_value_tool, get_portfolio_allocation_tool
+from agent.react_agent_tools import tavily_search_tool, market_analysis_reports_vector_search_tool, market_news_reports_vector_search_tool, get_vix_closing_value_tool, get_portfolio_allocation_tool, get_portfolio_ytd_return_tool
 
 # Initialize dotenv to load environment variables
 load_dotenv()
@@ -75,7 +75,8 @@ class MarketAssistantReactAgent:
                 market_analysis_reports_vector_search_tool,
                 market_news_reports_vector_search_tool,
                 get_vix_closing_value_tool,
-                get_portfolio_allocation_tool
+                get_portfolio_allocation_tool,
+                get_portfolio_ytd_return_tool
             ],
             checkpointer=self.memory
         )
