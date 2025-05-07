@@ -1,0 +1,110 @@
+[{
+  "_id": {
+    "$oid": "67fe7001074966d75101fc11"
+  },
+  "symbol": "SPY",
+  "charts": {
+    "day": "dc497e8e-a010-49b4-9fcf-8dcbdcec7d8f",
+    "week": "11452cb5-c307-4e8d-b01e-6f380bd5685d",
+    "month": "b22df6e9-b776-4220-b21c-83180a321f4"
+  }
+},
+{
+  "_id": {
+    "$oid": "67fe7001074966d75101fc14"
+  },
+  "symbol": "HYG",
+  "charts": {
+    "day": "1c5cb8dc-2ebd-488d-9ec7-92f611bc7f92",
+    "week": "39d4c57c-f2a7-4507-9ae3-7711f72aabda",
+    "month": "ed3a6aa1-d4c1-4bdd-8a12-bc64547b1f2d"
+  }
+},
+{
+  "_id": {
+    "$oid": "67fe7001074966d75101fc16"
+  },
+  "symbol": "QQQ",
+  "charts": {
+    "day": "f0877a9b-4881-4b31-a5ef-b5193b557ec9",
+    "week": "c40ce602-eed1-425d-ab3a-5b13557a3cde",
+    "month": "ed470f2b-7d4a-4db7-806c-fcfa4f9b1345"
+  }
+},
+{
+  "_id": {
+    "$oid": "67fe7001074966d75101fc1a"
+  },
+  "symbol": "XLE",
+  "charts": {
+    "day": "46fd5c58-2617-4e36-82d2-8525346c9e6e",
+    "week": "3c51ac82-84c5-4f97-a5e4-999c72c79e93",
+    "month": "859c4024-6805-4bb4-8833-2ba2b3b5f75d"
+  }
+},
+{
+  "_id": {
+    "$oid": "67fe7001074966d75101fc12"
+  },
+  "symbol": "EEM",
+  "charts": {
+    "day": "bc530efa-f73f-432c-b084-70abba5e9753",
+    "week": "11fe559b-c482-4808-bce8-1b3dea6df921",
+    "month": "45af2a7e-e4d9-4c5f-9e21-47ffb1980959"
+  }
+},
+{
+  "_id": {
+    "$oid": "67fe7001074966d75101fc13"
+  },
+  "symbol": "GLD",
+  "charts": {
+    "day": "ca2ff035-c8c9-451c-aafd-17a5d899f565",
+    "week": "2448ee5c-fcd7-42c1-bc83-a4df069ffd5a",
+    "month": "ea74b2e3-c2e0-40fa-9dec-206fc96c54d6"
+  }
+},
+{
+  "_id": {
+    "$oid": "67fe7001074966d75101fc17"
+  },
+  "symbol": "TLT",
+  "charts": {
+    "day": "4d492d64-aaea-4735-b739-aa2720019625",
+    "week": "b4faae11-4264-4848-9f42-4d0b614a7a02",
+    "month": "c842a094-9c7b-4e1e-a45b-153c480f035c"
+  }
+},
+{
+  "_id": {
+    "$oid": "67fe7001074966d75101fc18"
+  },
+  "symbol": "USO",
+  "charts": {
+    "day": "885f6992-57db-45de-8486-daf29b1e9027",
+    "week": "7e860c8d-01a3-4485-8a7c-874f9c121fc1",
+    "month": "ad69c22b-c51e-46db-91a0-e89b3a5f3e50"
+  }
+},
+{
+  "_id": {
+    "$oid": "67fe7001074966d75101fc19"
+  },
+  "symbol": "VNQ",
+  "charts": {
+    "day": "18faf0a0-7bd3-4825-bc1f-7ecb97d8066b",
+    "week": "249ced41-6c96-4432-9293-eedb66df8ae3",
+    "month": "69719ae8-964c-4c3a-b539-de48b58f86c0"
+  }
+},
+{
+  "_id": {
+    "$oid": "67fe7001074966d75101fc15"
+  },
+  "symbol": "LQD",
+  "charts": {
+    "day": "dd19123b-d1e7-4c51-bd94-704f024fd4ed",
+    "week": "0cd26f60-ea23-4918-ab35-e71fad313549",
+    "month": "a6d701e2-9b55-4788-9519-3194f38d18c1"
+  }
+}]
