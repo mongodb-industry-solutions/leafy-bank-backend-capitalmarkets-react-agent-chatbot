@@ -1,3 +1,4 @@
+# Docker-related
 build:
 	docker-compose up --build -d
 
@@ -10,6 +11,7 @@ stop:
 clean:
 	docker-compose down --rmi all -v
 
+# Poetry setup
 install_poetry:
 	brew install pipx
 	pipx ensurepath
