@@ -1,11 +1,11 @@
+# Imports 
 import os
-import asyncio
 from dotenv import load_dotenv
-
-from agent.bedrock.client import BedrockClient
 from langchain_aws import ChatBedrock
-
+from agent.bedrock.client import BedrockClient
 from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_core.messages import HumanMessage, AIMessage
+from rich.console import Console
 from langchain.tools import tool
 from agent.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
 from agent.db.mdb import MongoDBConnector
@@ -16,8 +16,6 @@ from pymongo import AsyncMongoClient
 from langgraph.checkpoint.mongodb.aio import AsyncMongoDBSaver
 
 from langgraph.prebuilt import create_react_agent
-from langchain_core.messages import HumanMessage, AIMessage
-from rich.console import Console
 
 import logging
 
@@ -42,7 +40,7 @@ llm = ChatBedrock(model=os.getenv("CHAT_COMPLETIONS_MODEL_ID"),
                 client=bedrock_client,
                 temperature=0)
 
-# Initialize TavilySearchResults for market news and analysis
+# Initialize TavilySearchResults
 tavily = TavilySearchResults(max_results=3)
 
 # Initialize the VoyageAI embeddings generator
