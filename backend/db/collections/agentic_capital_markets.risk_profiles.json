@@ -1,0 +1,32 @@
+[{
+  "_id": {
+    "$oid": "683dca4d7bff03f23d8817e6"
+  },
+  "risk_id": "HIGH_RISK",
+  "short_description": "Aggressive growth, high volatility, high return",
+  "active": false
+},
+{
+  "_id": {
+    "$oid": "683dca4d7bff03f23d8817e7"
+  },
+  "risk_id": "BALANCE",
+  "short_description": "Mix of growth and stability, moderate risk",
+  "active": true
+},
+{
+  "_id": {
+    "$oid": "683dca4d7bff03f23d8817e8"
+  },
+  "risk_id": "CONSERVATIVE",
+  "short_description": "Low volatility, stable returns, minimal risk",
+  "active": false
+},
+{
+  "_id": {
+    "$oid": "683dca4d7bff03f23d8817e9"
+  },
+  "risk_id": "LOW_RISK",
+  "short_description": "Capital preservation, very low exposure",
+  "active": false
+}]
