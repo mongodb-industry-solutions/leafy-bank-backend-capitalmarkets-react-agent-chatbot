@@ -83,6 +83,8 @@ if __name__ == "__main__":
     market_news_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_NEWS")
     market_analysis_vector_index_name = os.getenv("REPORT_MARKET_ANALISYS_VECTOR_INDEX_NAME")
     market_news_vector_index_name = os.getenv("REPORT_MARKET_NEWS_VECTOR_INDEX_NAME")
+    market_sm_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_SM")
+    market_sm_vector_index_name = os.getenv("REPORT_MARKET_SM_VECTOR_INDEX_NAME")
     report_vector_field = os.getenv("REPORT_VECTOR_FIELD")
 
     # Create vector search index for market analysis
@@ -97,6 +99,14 @@ if __name__ == "__main__":
     vs_idx = VectorSearchIndexCreator(collection_name=market_news_collection_name)
     result = vs_idx.create_index(
         index_name=market_news_vector_index_name,
+        vector_field=report_vector_field
+    )
+    logger.info(result)
+
+    # Create vector search index for market SM
+    vs_idx = VectorSearchIndexCreator(collection_name=market_sm_collection_name)
+    result = vs_idx.create_index(
+        index_name=market_sm_vector_index_name,
         vector_field=report_vector_field
     )
     logger.info(result)

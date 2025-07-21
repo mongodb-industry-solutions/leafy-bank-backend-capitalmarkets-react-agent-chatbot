@@ -3,7 +3,7 @@ import logging
 import datetime
 from dotenv import load_dotenv
 from langchain.tools import tool
-from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_tavily import TavilySearch
 from agent.vogayeai.vogaye_ai_embeddings import VogayeAIEmbeddings
 from agent.db.mdb import MongoDBConnector
 
@@ -18,30 +18,35 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Initialize search tool
-tavily_search_tool = TavilySearchResults(max_results=3)
+tavily_search_tool = TavilySearch(max_results=3)
 
 # Initialize embeddings
 embedding_model_id = os.getenv("EMBEDDINGS_MODEL_ID", "voyage-finance-2")
 ve = VogayeAIEmbeddings(api_key=os.getenv("VOYAGE_API_KEY"))
 
 # Getting environment variables for MongoDB collections
-MARKET_COLLECTION_NAME = os.getenv("REPORTS_COLLECTION_MARKET_ANALYSIS", "reports_market_analysis")
-NEWS_COLLECTION_NAME = os.getenv("REPORTS_COLLECTION_MARKET_NEWS", "reports_market_news")
+MARKET_ANALYSIS_COLLECTION_NAME = os.getenv("REPORTS_COLLECTION_MARKET_ANALYSIS", "reports_market_analysis")
+MARKET_NEWS_COLLECTION_NAME = os.getenv("REPORTS_COLLECTION_MARKET_NEWS", "reports_market_news")
+MARKET_SM_COLLECTION_NAME = os.getenv("REPORTS_COLLECTION_MARKET_SM", "reports_market_sm")
+PORTFOLIO_ALLOCATION_COLLECTION_NAME = os.getenv("PORTFOLIO_ALLOCATION_COLLECTION", "portfolio_allocation")
 PORTFOLIO_PERFORMANCE_COLLECTION_NAME = os.getenv("PORTFOLIO_PERFORMANCE_COLLECTION", "portfolio_performance")
 
 # Initialize MongoDB connector
 mongodb_connector = MongoDBConnector()
 
 # Get the collections for market and news reports
-market_reports_collection = mongodb_connector.get_collection(collection_name=MARKET_COLLECTION_NAME)
-news_reports_collection = mongodb_connector.get_collection(collection_name=NEWS_COLLECTION_NAME)
+market_reports_collection = mongodb_connector.get_collection(collection_name=MARKET_ANALYSIS_COLLECTION_NAME)
+news_reports_collection = mongodb_connector.get_collection(collection_name=MARKET_NEWS_COLLECTION_NAME)
+market_sm_collection = mongodb_connector.get_collection(collection_name=MARKET_SM_COLLECTION_NAME)
 
-# Get portfolio performance collection
+# Get portfolio allocation and performance collections
+portfolio_allocation_collection = mongodb_connector.get_collection(collection_name=PORTFOLIO_ALLOCATION_COLLECTION_NAME)
 portfolio_performance_collection = mongodb_connector.get_collection(PORTFOLIO_PERFORMANCE_COLLECTION_NAME)
 
 # Getting environment variables for vector index names
 REPORT_MARKET_ANALISYS_VECTOR_INDEX_NAME = os.getenv("REPORT_MARKET_ANALISYS_VECTOR_INDEX_NAME")
 REPORT_MARKET_NEWS_VECTOR_INDEX_NAME = os.getenv("REPORT_MARKET_NEWS_VECTOR_INDEX_NAME")
+REPORT_MARKET_SM_VECTOR_INDEX_NAME = os.getenv("REPORT_MARKET_SM_VECTOR_INDEX_NAME")
 
 # Getting environment variables for vector field names
 REPORT_VECTOR_FIELD = os.getenv("REPORT_VECTOR_FIELD", "report_embedding")
@@ -52,22 +57,28 @@ def market_analysis_reports_vector_search_tool(query: str, k: int = 1):
     """
     Perform a vector similarity search on market analysis reports for the CURRENT PORTFOLIO.
 
-    IMPORTANT: This tool provides market analysis ONLY for assets included in the current portfolio allocation.  
-    If someone requests real-time data or live updates for assets outside the current portfolio, use the Tavily Search tool instead.
+    IMPORTANT: This tool should typically be used AFTER get_portfolio_allocation_tool
+    to provide context-aware analysis for the user's actual holdings.
+
+    COMMON USAGE PATTERNS:
+    - After get_portfolio_allocation_tool for reallocation advice
+    - After get_portfolio_allocation_tool for technical analysis questions
+    - Part of comprehensive market analysis (with news and social tools)
 
     Use this tool when you need:
-    - Market trends and analysis for portfolio assets
-    - Insights on recent portfolio performance
-    - Macroeconomic factors affecting the current portfolio
+    - Market trends and momentum analysis for portfolio assets
+    - Technical indicators for traditional assets (moving averages)
+    - Market conditions to inform reallocation decisions
     - Asset-specific diagnostics for portfolio holdings
+    - Market volatility analysis for traditional assets
+    - Macroeconomic factors affecting current portfolio
 
     Args:
-        query (str): The search query related to portfolio assets, market trends, etc.
+        query (str): The search query related to portfolio assets, market trends, insights, etc.
         k (int, optional): The number of top results to return. Defaults to 1.
 
     Returns:
-        dict: Contains relevant sections from the most recent market analysis report
-              for the current portfolio.
+        dict: Contains relevant sections from the most recent market analysis report for the current portfolio.
     """
     try:
         logger.info(f"Searching portfolio market analysis for: {query}")
@@ -208,25 +219,26 @@ def market_news_reports_vector_search_tool(query: str, k: int = 1):
     """
     Perform a vector similarity search on market news reports for the CURRENT PORTFOLIO.
 
-    IMPORTANT: This tool provides market news summaries and insights ONLY for assets included in the current portfolio allocation.  
-    Note that it DOES NOT offer real-time data or live updates.  
+    IMPORTANT: This tool should typically be used AFTER get_portfolio_allocation_tool.
+    For sentiment questions, use this WITH market_social_media_reports_vector_search_tool.
 
-    When possible, include links to the original news articles at the end of the summary for reference.  
-    If someone requests real-time data or information on assets not in the current portfolio, use the Tavily Search tool instead.
+    COMMON USAGE PATTERNS:
+    - After get_portfolio_allocation_tool for sentiment analysis
+    - Combined with market_social_media_reports_vector_search_tool for complete sentiment picture
+    - Part of comprehensive market analysis
 
     Use this tool when you need:
-    - Recent news affecting portfolio assets
-    - Sentiment analysis for portfolio holdings
-    - News summaries for specific assets in the portfolio
-    - An overview of the news impact on the current portfolio
+    - Recent market news affecting portfolio assets
+    - News sentiment analysis for portfolio holdings  
+    - Media coverage impact on portfolio assets
+    - News-driven market sentiment for traditional assets
 
     Args:
         query (str): The search query related to portfolio assets.
         k (int, optional): The number of top results to return. Defaults to 1.
 
     Returns:
-        dict: Contains relevant news summaries from the most recent reports
-              for the current portfolio.
+        dict: Contains relevant news summaries from the most recent market news reports for the current portfolio.
     """
     try:
         logger.info(f"Searching portfolio news reports for: {query}")
@@ -373,6 +385,176 @@ def market_news_reports_vector_search_tool(query: str, k: int = 1):
         
     except Exception as e:
         logger.error(f"Error searching portfolio news reports: {str(e)}")
+        return {"error": f"An error occurred: {str(e)}"}
+
+@tool
+def market_social_media_reports_vector_search_tool(query: str, k: int = 1):
+    """
+    Perform a vector similarity search on market social media reports for the CURRENT PORTFOLIO.
+
+    IMPORTANT: This tool should typically be used AFTER get_portfolio_allocation_tool.
+    For sentiment questions, use this WITH market_news_reports_vector_search_tool.
+
+    COMMON USAGE PATTERNS:
+    - After get_portfolio_allocation_tool for sentiment analysis
+    - Combined with market_news_reports_vector_search_tool for complete sentiment picture
+    - Part of comprehensive market analysis
+
+    Use this tool when you need:
+    - Social media sentiment for portfolio assets
+    - Community discussions about portfolio holdings
+    - Reddit/Twitter sentiment on traditional market assets
+    - Social media buzz affecting portfolio assets
+
+    Args:
+        query (str): The search query related to portfolio assets.
+        k (int, optional): The number of top results to return. Defaults to 1.
+
+    Returns:
+        dict: Contains relevant social media sentiment from the most recent market social media reports for the current portfolio.
+    """
+    try:
+        logger.info(f"Searching portfolio social media reports for: {query}")
+        
+        # Get the most recent document for context information only
+        most_recent = market_sm_collection.find_one(
+            {}, 
+            sort=[("timestamp", -1)]
+        )
+        
+        if not most_recent:
+            return {"results": "No social media reports found for the current portfolio."}
+        
+        # Generate query embedding
+        query_embedding = ve.get_embeddings(model_id=embedding_model_id, text=query)
+        
+        # Extract the date of the most recent report
+        report_date = most_recent.get("date_string", "Unknown date")
+        
+        # Get portfolio assets list for context
+        portfolio_assets = []
+        try:
+            for allocation in most_recent.get("portfolio_allocation", []):
+                asset = allocation.get("asset", "Unknown")
+                description = allocation.get("description", "")
+                allocation_pct = allocation.get("allocation_percentage", "")
+                portfolio_assets.append(f"{asset} ({description}): {allocation_pct}")
+        except Exception as e:
+            logger.error(f"Error extracting portfolio information: {e}")
+        
+        # Perform vector search across all documents
+        pipeline = [
+            {
+                "$vectorSearch": {
+                    "index": f"{REPORT_MARKET_SM_VECTOR_INDEX_NAME}",
+                    "path": REPORT_VECTOR_FIELD,
+                    "queryVector": query_embedding,
+                    "numCandidates": 5,
+                    "limit": k + 3  # Get more candidates for re-ranking
+                }
+            },
+            {
+                "$project": {
+                    "_id": 0,
+                    "date_string": 1,
+                    "report": 1,
+                    "timestamp": 1,
+                    "score": {"$meta": "vectorSearchScore"}
+                }
+            }
+        ]
+        
+        results = list(market_sm_collection.aggregate(pipeline))
+        
+        # If no results from vector search, just return the most recent document
+        if not results:
+            # Extract relevant information
+            overall_diagnosis = most_recent.get("report", {}).get("overall_news_diagnosis", "No social media diagnosis available")
+            asset_sm_sentiments = most_recent.get("report", {}).get("asset_sm_sentiments", [])
+            
+            # Format asset social media sentiment information
+            sm_sentiments = []
+            for sentiment in asset_sm_sentiments:
+                asset = sentiment.get("asset", "Unknown")
+                sentiment_text = sentiment.get("sentiment", "Unknown")
+                sm_sentiments.append(f"{asset}: {sentiment_text}")
+            
+            return {
+                "report_date": report_date,
+                "portfolio_assets": portfolio_assets,
+                "overall_diagnosis": overall_diagnosis,
+                "social_media_sentiments": sm_sentiments,
+                "note": "This is the most recent social media report for your portfolio."
+            }
+        
+        # Re-rank results by combining vector similarity score with recency
+        now = datetime.datetime.now(datetime.timezone.utc)
+        
+        # Make sure most recent is always in the results
+        most_recent_in_results = False
+        
+        for result in results:
+            # Check if this is the most recent document
+            if result.get("date_string") == most_recent.get("date_string"):
+                most_recent_in_results = True
+                
+            # Calculate time difference in days (newer = higher score)
+            result_timestamp = result.get("timestamp", now)
+            if isinstance(result_timestamp, str):
+                try:
+                    result_timestamp = datetime.datetime.fromisoformat(result_timestamp.replace('Z', '+00:00'))
+                except:
+                    result_timestamp = now
+                    
+            days_old = (now - result_timestamp).total_seconds() / (24 * 3600) if hasattr(result_timestamp, 'total_seconds') else 30
+            
+            # Calculate recency score (1.0 for current, approaches 0 as it gets older)
+            recency_score = 1.0 / (1.0 + days_old)
+            
+            # Get vector similarity score (normalize it to 0-1 range)
+            similarity_score = result.get("score", 0.0)
+            
+            # Combined score with weights (adjust weights as needed)
+            vector_weight = 0.3  # Reduce this to give less weight to semantic similarity
+            recency_weight = 0.7  # Increase this to give more weight to recency
+            
+            # Calculate combined score
+            combined_score = (vector_weight * similarity_score) + (recency_weight * recency_score)
+            result["combined_score"] = combined_score
+        
+        # If most recent isn't in results, add it
+        if not most_recent_in_results:
+            most_recent["combined_score"] = 1.0  # Give it a high score
+            most_recent["score"] = 0.5  # Neutral semantic score
+            results.append(most_recent)
+        
+        # Sort results by combined score
+        results = sorted(results, key=lambda x: x.get("combined_score", 0.0), reverse=True)
+        
+        # Process best result (highest combined score)
+        report_data = results[0]
+        report = report_data.get("report", {})
+        overall_diagnosis = report.get("overall_news_diagnosis", "No social media diagnosis available")
+        asset_sm_sentiments = report.get("asset_sm_sentiments", [])
+        
+        # Format social media sentiments
+        sm_sentiments = []
+        for sentiment in asset_sm_sentiments:
+            asset = sentiment.get("asset", "Unknown")
+            sentiment_text = sentiment.get("sentiment", "Unknown")
+            sm_sentiments.append(f"{asset}: {sentiment_text}")
+        
+        # Format the return data
+        return {
+            "report_date": report_date,
+            "portfolio_assets": portfolio_assets[:5],  # Show top 5 portfolio assets
+            "overall_diagnosis": overall_diagnosis,
+            "social_media_sentiments": sm_sentiments,
+            "note": "This information is from the most relevant and recent portfolio social media reports."
+        }
+        
+    except Exception as e:
+        logger.error(f"Error searching portfolio social media reports: {str(e)}")
         return {"error": f"An error occurred: {str(e)}"}
     
 @tool
