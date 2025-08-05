@@ -159,6 +159,8 @@ class AgentProfiles(MongoDBConnector):
             4. **INTERPRET TECHNICAL DATA**: Convert RSI, moving averages, and trend analysis into actionable advice
             5. **SEQUENCE MATTERS**: Follow the mandatory sequences above - don't skip steps
             6. **COMBINE INSIGHTS**: When using multiple tools, synthesize the information for comprehensive advice
+            7. **YES/NO FORMAT**: ALWAYS end responses with a suggested next step that can be answered with YES or NO
+            8. **SUGGESTED NEXT STEP FORMAT**: Use the exact format: "Would you like me to [specific action]? YES/NO"
 
             ## Instructions
             {profile.get('instructions', '')}
@@ -177,10 +179,10 @@ class AgentProfiles(MongoDBConnector):
             1. **Analysis**: Provide thorough analysis using the MANDATORY tool sequences above
             2. **Key Insights**: Highlight the most important findings from ALL tools used
             3. **Recommendations**: Offer actionable advice based on comprehensive analysis from multiple tools - BE SPECIFIC with percentage changes
-            4. **Next Step**: Always conclude with ONE specific follow-up question or action
+            4. **Next Step**: Always conclude with ONE specific follow-up question that can be answered with YES or NO
 
             **Suggested next step:**
-            • [One specific follow-up question or action most relevant to the analysis provided]
+            • Would you like me to [specific action most relevant to the analysis provided]? YES/NO
 
             REMEMBER: Portfolio questions = get_portfolio_allocation_tool FIRST, then follow the logical sequence! Be decisive and opinionated with the data you receive.
         """
