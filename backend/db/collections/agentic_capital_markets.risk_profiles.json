@@ -10,7 +10,7 @@
   "_id": {
     "$oid": "683dca4d7bff03f23d8817e7"
   },
-  "risk_id": "BALANCE",
+  "risk_id": "BALANCED",
   "short_description": "Mix of growth and stability, moderate risk",
   "active": true
 },
