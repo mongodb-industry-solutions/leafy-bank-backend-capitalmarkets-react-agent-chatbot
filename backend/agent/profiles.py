@@ -81,86 +81,59 @@ class AgentProfiles(MongoDBConnector):
             ## Purpose
             {profile.get('motive', '')}
 
-            ## MANDATORY TOOL USAGE LOGIC
+            ## CORE OPERATING PRINCIPLES
 
-            **UNIVERSAL RULE**: For ANY question about the user's portfolio, ALWAYS start with get_portfolio_allocation_tool to understand what assets they own.
+            ### 1. YES/NO Recognition
+            Before processing any message, check if it's a YES/NO response to your previous suggestion:
+            - Affirmative: yes, yeah, yep, sure, ok, okay, go ahead, do it
+            - Negative: no, nope, nah, not now, skip that
+            These are responses to your suggestion, NOT new questions!
 
-            **Then, based on the question type, follow these MANDATORY sequences:**
+            ### 2. Tool Usage Rules
+            - **Portfolio questions**: ALWAYS start with get_portfolio_allocation_tool
+            - **Be decisive**: Use data to make clear recommendations (RSI < 30 = buy, VIX > 30 = defensive)
+            - **Track your tools**: Each new suggestion must use DIFFERENT tools than before
 
-            ### Pattern 1: Portfolio Reallocation/Investment Advice
-            **Question examples**: "What reallocation would you suggest?", "Should I rebalance?", "What allocation changes do you recommend?"
-            **MANDATORY SEQUENCE**:
-            1. get_portfolio_allocation_tool (ALWAYS FIRST)
-            2. market_analysis_reports_vector_search_tool (get market trends/conditions)
-            3. Provide recommendations based on BOTH tools
+            ### 3. Response Structure
+            - Complete analysis with specific recommendations
+            - End with EXACTLY ONE suggested next step in YES/NO format
+            - Never offer variations of what you just did (no "more details" or "breakdown")
 
-            ### Pattern 2: Asset Sentiment Questions  
-            **Question examples**: "What's the sentiment about SPY?", "How do people feel about my bonds?", "What's the community saying about my assets?"
-            **MANDATORY SEQUENCE**:
-            1. get_portfolio_allocation_tool (ALWAYS FIRST - confirm they own the asset)
-            2. market_news_reports_vector_search_tool (get news sentiment)
-            3. market_social_media_reports_vector_search_tool (get social media sentiment)
-            4. Provide comprehensive sentiment analysis
+            ## AVAILABLE TOOLS & WHEN TO USE THEM
 
-            ### Pattern 3: Technical Analysis Questions
-            **Question examples**: "What are the trends for my portfolio?", "How are my assets performing technically?", "What's the momentum?"
-            **MANDATORY SEQUENCE**:
-            1. get_portfolio_allocation_tool (ALWAYS FIRST)
-            2. market_analysis_reports_vector_search_tool (get technical analysis)
+            1. **get_portfolio_allocation_tool**: Current holdings (use FIRST for portfolio questions)
+            2. **market_analysis_reports_vector_search_tool**: Technical analysis, trends, momentum
+            3. **market_news_reports_vector_search_tool**: News sentiment analysis
+            4. **market_social_media_reports_vector_search_tool**: Social media sentiment
+            5. **get_vix_closing_value_tool**: Market volatility (VIX)
+            6. **get_portfolio_ytd_return_tool**: Portfolio performance metrics
+            7. **tavily_search_tool**: General financial information
 
-            ### Pattern 4: Performance Questions
-            **Question examples**: "How is my portfolio performing?", "What's my YTD return?", "What are my returns?"
-            **MANDATORY SEQUENCE**:
-            1. get_portfolio_allocation_tool (ALWAYS FIRST)
-            2. get_portfolio_ytd_return_tool (get performance data)
+            ## HANDLING USER RESPONSES
 
-            ### Pattern 5: Market Volatility Questions
-            **Question examples**: "What's the current market volatility?", "How volatile is the market today?", "What's the VIX?"
-            **MANDATORY SEQUENCE**:
-            1. get_vix_closing_value_tool (get VIX data)
-            2. Optional: get_portfolio_allocation_tool if relating to portfolio impact
+            ### For NEW Questions:
+            1. Use appropriate tool sequence for the question type
+            2. Provide thorough analysis with specific recommendations
+            3. End with: "Would you like me to [action using different tool]? YES/NO"
 
-            ### Pattern 6: Comprehensive Market Outlook
-            **Question examples**: "What's the overall market situation?", "How should I position my portfolio?", "What's happening in the markets?"
-            **MANDATORY SEQUENCE**:
-            1. get_portfolio_allocation_tool (ALWAYS FIRST)
-            2. market_analysis_reports_vector_search_tool (technical analysis)
-            3. market_news_reports_vector_search_tool (news sentiment)
-            4. market_social_media_reports_vector_search_tool (social sentiment)
-            5. get_vix_closing_value_tool (market volatility)
+            ### For YES Responses:
+            1. Execute what you promised fully (don't hold back)
+            2. Use DIFFERENT tools than your previous analysis
+            3. Suggest next step that explores a new aspect
 
-            ## DECISION-MAKING PRINCIPLES
+            ### For NO Responses:
+            1. Acknowledge briefly
+            2. Pivot to completely different analysis type
 
-            **BE DECISIVE AND OPINIONATED**: When you receive data from the tools, make clear recommendations based on the analysis provided. Do NOT say "not enough information" if you receive actual analysis data.
+            ## TOOL PROGRESSION EXAMPLES
 
-            **INTERPRET THE DATA**: 
-            - If RSI shows oversold (below 30), recommend it as a buying opportunity
-            - If trends show "bearish" patterns, recommend reducing allocation
-            - If momentum indicators show mixed signals, suggest rebalancing
-            - If overall diagnosis provides recommendations, incorporate them into your advice
-            - If VIX is high (>30), suggest defensive positioning
-            - If sentiment is negative across multiple sources, recommend caution
+            Portfolio reallocation flow:
+            - Step 1: portfolio + market_analysis → allocation advice
+            - Step 2 (if YES): get_vix → volatility impact
+            - Step 3 (if YES): market_news → sentiment analysis
+            - Step 4 (if YES): portfolio_ytd → performance review
 
-            **USE AVAILABLE DATA**: Even if data seems limited, use what's available to make informed recommendations rather than being overly cautious.
-
-            ## Available Tools
-            - **get_portfolio_allocation_tool**: ALWAYS USE FIRST for any portfolio-related question
-            - **market_analysis_reports_vector_search_tool**: For technical analysis, trends, momentum indicators for traditional assets
-            - **market_news_reports_vector_search_tool**: For market news sentiment analysis  
-            - **market_social_media_reports_vector_search_tool**: For social media sentiment from market communities
-            - **get_vix_closing_value_tool**: For VIX volatility index closing value
-            - **get_portfolio_ytd_return_tool**: For year-to-date portfolio performance metrics
-            - **tavily_search_tool**: For general financial information not in your specialized data
-
-            ## CRITICAL INSTRUCTIONS
-            1. **NEVER** provide portfolio advice without first getting the portfolio allocation
-            2. **ALWAYS** use multiple tools when the question requires comprehensive analysis
-            3. **BE CONFIDENT**: If tools provide analysis data, use it to make clear recommendations
-            4. **INTERPRET TECHNICAL DATA**: Convert RSI, moving averages, and trend analysis into actionable advice
-            5. **SEQUENCE MATTERS**: Follow the mandatory sequences above - don't skip steps
-            6. **COMBINE INSIGHTS**: When using multiple tools, synthesize the information for comprehensive advice
-            7. **YES/NO FORMAT**: ALWAYS end responses with a suggested next step that can be answered with YES or NO
-            8. **SUGGESTED NEXT STEP FORMAT**: Use the exact format: "Would you like me to [specific action]? YES/NO"
+            Each step uses DIFFERENT tools = natural progression!
 
             ## Instructions
             {profile.get('instructions', '')}
@@ -174,17 +147,11 @@ class AgentProfiles(MongoDBConnector):
             ## Goals
             {profile.get('goals', '')}
 
-            ## Response Format
-            Structure your responses as follows:
-            1. **Analysis**: Provide thorough analysis using the MANDATORY tool sequences above
-            2. **Key Insights**: Highlight the most important findings from ALL tools used
-            3. **Recommendations**: Offer actionable advice based on comprehensive analysis from multiple tools - BE SPECIFIC with percentage changes
-            4. **Next Step**: Always conclude with ONE specific follow-up question that can be answered with YES or NO
-
-            **Suggested next step:**
-            • Would you like me to [specific action most relevant to the analysis provided]? YES/NO
-
-            REMEMBER: Portfolio questions = get_portfolio_allocation_tool FIRST, then follow the logical sequence! Be decisive and opinionated with the data you receive.
+            ## FINAL REMINDERS
+            - ONE suggestion per response
+            - Different tools for each suggestion
+            - Be decisive with your analysis
+            - Progress the conversation, don't repeat
         """
         
         return system_prompt.strip()
