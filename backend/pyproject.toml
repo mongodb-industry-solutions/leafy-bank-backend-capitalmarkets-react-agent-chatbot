@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "your-virtual-env"
 version = "0.1.0"
-description = "This repository hosts the backend for the Capital Markets React Agent Chatbot."
+description = "This repository hosts the backend for the Capital Markets React Agent."
 authors = ["Julian Boronat <julian.boronat@mongodb.com>"]
 readme = "README.md"
 
@@ -16,7 +16,7 @@ botocore = "^1.35.70"
 langchain-aws = "^0.2.15"
 langchain-mongodb = "^0.5.0"
 langgraph = "^0.3.5"
-langchain-community = "^0.3.20"
+langchain-tavily = "^0.2.10"
 voyageai = "^0.3.2"
 langgraph-checkpoint-mongodb = "^0.1.3"
 rich = "13.9.4"

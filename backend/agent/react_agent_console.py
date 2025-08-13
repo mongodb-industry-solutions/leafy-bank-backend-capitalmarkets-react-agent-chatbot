@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from langchain_aws import ChatBedrock
 from agent.bedrock.client import BedrockClient
-from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_tavily import TavilySearch
 from langchain_core.messages import HumanMessage, AIMessage
 from rich.console import Console
 from langchain.tools import tool
@@ -40,8 +40,8 @@ llm = ChatBedrock(model=os.getenv("CHAT_COMPLETIONS_MODEL_ID"),
                 client=bedrock_client,
                 temperature=0)
 
-# Initialize TavilySearchResults
-tavily = TavilySearchResults(max_results=3)
+# Initialize TavilySearch
+tavily = TavilySearch(max_results=3)
 
 # Initialize the VoyageAI embeddings generator
 embedding_model_id = os.getenv("EMBEDDINGS_MODEL_ID", "voyage-finance-2")
@@ -50,13 +50,20 @@ ve = VogayeAIEmbeddings(api_key=os.getenv("VOYAGE_API_KEY"))
 # Initialize MongoDB collections for reports
 market_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_ANALYSIS", "reports_market_analysis")
 news_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_NEWS", "reports_market_news")
+market_sm_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_SM", "reports_market_sm")
+portfolio_allocation_collection_name = os.getenv("PORTFOLIO_ALLOCATION_COLLECTION", "portfolio_allocation")
+portfolio_performance_collection_name = os.getenv("PORTFOLIO_PERFORMANCE_COLLECTION", "portfolio_performance")
 mongodb_connector = MongoDBConnector()
 market_collection = mongodb_connector.get_collection(market_collection_name)
 news_collection = mongodb_connector.get_collection(news_collection_name)
+market_sm_collection = mongodb_connector.get_collection(market_sm_collection_name)
+portfolio_allocation_collection = mongodb_connector.get_collection(portfolio_allocation_collection_name)
+portfolio_performance_collection = mongodb_connector.get_collection(portfolio_performance_collection_name)
 
 # Getting environment variables for vector index names
 REPORT_MARKET_ANALISYS_VECTOR_INDEX_NAME = os.getenv("REPORT_MARKET_ANALISYS_VECTOR_INDEX_NAME")
 REPORT_MARKET_NEWS_VECTOR_INDEX_NAME = os.getenv("REPORT_MARKET_NEWS_VECTOR_INDEX_NAME")
+REPORT_MARKET_SM_VECTOR_INDEX_NAME = os.getenv("REPORT_MARKET_SM_VECTOR_INDEX_NAME")
 
 # Getting environment variables for vector field names
 REPORT_VECTOR_FIELD = os.getenv("REPORT_VECTOR_FIELD", "report_embedding")
@@ -160,24 +167,28 @@ async def cleanup_old_threads(mongodb_client, database_name, checkpoints_collect
 def market_analysis_reports_vector_search_tool(query: str, k: int = 1):
     """
     Perform a vector similarity search on market analysis reports for the CURRENT PORTFOLIO.
-    
-    IMPORTANT: This tool provides market analysis ONLY for assets in the current portfolio allocation.
-    It is important to note that this tool DOES NOT provide real-time data or live updates.
-    If someone asks for real-time data or live updates regarding assets that are not in the current portfolio, use the Tavily Search tool.
-    
+
+    IMPORTANT: This tool should typically be used AFTER get_portfolio_allocation_tool
+    to provide context-aware analysis for the user's actual holdings.
+
+    COMMON USAGE PATTERNS:
+    - After get_portfolio_allocation_tool for reallocation advice
+    - After get_portfolio_allocation_tool for technical analysis questions
+    - Part of comprehensive market analysis (with news and social tools)
+
     Use this tool when you need:
-    - Market trends and analysis for assets in the portfolio
-    - Recent portfolio performance insights
-    - Macroeconomic factors affecting the current portfolio
+    - Market trends and insights analysis for portfolio assets
+    - Technical indicators for traditional assets (moving averages)
+    - Market conditions to inform reallocation decisions
     - Asset-specific diagnostics for portfolio holdings
-    
+    - Market volatility analysis for traditional assets
+
     Args:
-        query (str): The search query about portfolio assets, market trends, etc.
-        k (int, optional): Number of top results to return. Defaults to 1.
-        
+        query (str): The search query related to portfolio assets, trends, insights, etc.
+        k (int, optional): The number of top results to return. Defaults to 1.
+
     Returns:
-        dict: Contains relevant sections from the most recent market analysis report
-             for the current portfolio.
+        dict: Contains relevant sections from the most recent market analysis report for the current portfolio.
     """
     try:
         rich.print(f"\n[Action] Searching portfolio market analysis for: {query}")
@@ -273,24 +284,27 @@ def market_analysis_reports_vector_search_tool(query: str, k: int = 1):
 def market_news_reports_vector_search_tool(query: str, k: int = 1):
     """
     Perform a vector similarity search on market news reports for the CURRENT PORTFOLIO.
-    
-    IMPORTANT: This tool provides market news summary and insights ONLY for assets in the current portfolio allocation.
-    It is important to note that this tool DOES NOT provide real-time data or live updates.
-    If someone asks for real-time data or live updates regarding assets that are not in the current portfolio, use the Tavily Search tool.
-    
+
+    IMPORTANT: This tool should typically be used AFTER get_portfolio_allocation_tool.
+    For sentiment questions, use this WITH market_social_media_reports_vector_search_tool.
+
+    COMMON USAGE PATTERNS:
+    - After get_portfolio_allocation_tool for sentiment analysis
+    - Combined with market_social_media_reports_vector_search_tool for complete sentiment picture
+    - Part of comprehensive market analysis
+
     Use this tool when you need:
-    - Recent news affecting portfolio assets
-    - Sentiment analysis for portfolio holdings
-    - News summaries for specific assets in the portfolio
-    - Overall news impact on the current portfolio
-    
+    - Recent market news affecting portfolio assets
+    - News sentiment analysis for portfolio holdings  
+    - Media coverage impact on portfolio assets
+    - News-driven market sentiment for traditional assets
+
     Args:
-        query (str): The search query about news related to portfolio assets.
-        k (int, optional): Number of top results to return. Defaults to 1.
-        
+        query (str): The search query related to portfolio assets.
+        k (int, optional): The number of top results to return. Defaults to 1.
+
     Returns:
-        dict: Contains relevant news summaries from the most recent news report
-             for the current portfolio.
+        dict: Contains relevant news summaries from the most recent market news reports for the current portfolio.
     """
     try:
         rich.print(f"\n[Action] Searching portfolio news reports for: {query}")
@@ -393,6 +407,287 @@ def market_news_reports_vector_search_tool(query: str, k: int = 1):
     except Exception as e:
         rich.print(f"[bright_red]Error searching portfolio news reports: {str(e)}[/bright_red]")
         return {"error": f"An error occurred: {str(e)}"}
+
+
+@tool
+def market_social_media_reports_vector_search_tool(query: str, k: int = 1):
+    """
+    Perform a vector similarity search on market social media reports for the CURRENT PORTFOLIO.
+
+    IMPORTANT: This tool should typically be used AFTER get_portfolio_allocation_tool.
+    For sentiment questions, use this WITH market_news_reports_vector_search_tool.
+
+    COMMON USAGE PATTERNS:
+    - After get_portfolio_allocation_tool for sentiment analysis
+    - Combined with market_news_reports_vector_search_tool for complete sentiment picture
+    - Part of comprehensive market analysis
+
+    Use this tool when you need:
+    - Social media sentiment for portfolio assets
+    - Community discussions about portfolio holdings
+    - Reddit/Twitter sentiment on traditional market assets
+    - Social media buzz affecting portfolio assets
+
+    Args:
+        query (str): The search query related to portfolio assets.
+        k (int, optional): The number of top results to return. Defaults to 1.
+
+    Returns:
+        dict: Contains relevant social media sentiment from the most recent market social media reports for the current portfolio.
+    """
+    try:
+        rich.print(f"\n[Action] Searching portfolio social media reports for: {query}")
+        
+        # Get the most recent document for context information only
+        most_recent = market_sm_collection.find_one(
+            {}, 
+            sort=[("timestamp", -1)]
+        )
+        
+        if not most_recent:
+            return {"results": "No social media reports found for the current portfolio."}
+        
+        # Generate query embedding
+        query_embedding = ve.get_embeddings(model_id=embedding_model_id, text=query)
+        
+        # Extract the date of the most recent report
+        report_date = most_recent.get("date_string", "Unknown date")
+        
+        # Get portfolio assets list for context
+        portfolio_assets = []
+        try:
+            for allocation in most_recent.get("portfolio_allocation", []):
+                asset = allocation.get("asset", "Unknown")
+                description = allocation.get("description", "")
+                allocation_pct = allocation.get("allocation_percentage", "")
+                portfolio_assets.append(f"{asset} ({description}): {allocation_pct}")
+        except Exception as e:
+            logger.error(f"Error extracting portfolio information: {e}")
+        
+        # Perform vector search across all documents
+        pipeline = [
+            {
+                "$vectorSearch": {
+                    "index": f"{REPORT_MARKET_SM_VECTOR_INDEX_NAME}",
+                    "path": REPORT_VECTOR_FIELD,
+                    "queryVector": query_embedding,
+                    "numCandidates": 5,
+                    "limit": k
+                }
+            },
+            {
+                "$project": {
+                    "_id": 0,
+                    "date_string": 1,
+                    "report": 1,
+                    "score": {"$meta": "vectorSearchScore"}
+                }
+            }
+        ]
+        
+        results = list(market_sm_collection.aggregate(pipeline))
+        
+        # If no results from vector search, just return the most recent document
+        if not results:
+            # Extract relevant information
+            overall_diagnosis = most_recent.get("report", {}).get("overall_news_diagnosis", "No social media diagnosis available")
+            asset_sm_sentiments = most_recent.get("report", {}).get("asset_sm_sentiments", [])
+            
+            # Format asset social media sentiment information
+            sm_sentiments = []
+            for sentiment in asset_sm_sentiments[:3]:  # Limit to 3 assets for readability
+                asset = sentiment.get("asset", "Unknown")
+                sentiment_text = sentiment.get("sentiment", "Unknown")
+                sm_sentiments.append(f"{asset}: {sentiment_text}")
+            
+            return {
+                "report_date": report_date,
+                "portfolio_assets": portfolio_assets[:5],  # Show top 5 portfolio assets
+                "overall_diagnosis": overall_diagnosis,
+                "social_media_sentiments": sm_sentiments,
+                "note": "This is the most recent social media report for your portfolio."
+            }
+        
+        # Process vector search results
+        report_data = results[0]
+        report = report_data.get("report", {})
+        overall_diagnosis = report.get("overall_news_diagnosis", "No social media diagnosis available")
+        asset_sm_sentiments = report.get("asset_sm_sentiments", [])
+        
+        # Format social media sentiments
+        sm_sentiments = []
+        for sentiment in asset_sm_sentiments:
+            asset = sentiment.get("asset", "Unknown")
+            sentiment_text = sentiment.get("sentiment", "Unknown")
+            sm_sentiments.append(f"{asset}: {sentiment_text}")
+        
+        # Format the return data
+        return {
+            "report_date": report_date,
+            "portfolio_assets": portfolio_assets[:5],  # Show top 5 portfolio assets
+            "overall_diagnosis": overall_diagnosis,
+            "social_media_sentiments": sm_sentiments[:3],  # Limit to 3 for readability
+            "note": "This information is from relevant portfolio social media reports."
+        }
+        
+    except Exception as e:
+        rich.print(f"[bright_red]Error searching portfolio social media reports: {str(e)}[/bright_red]")
+        return {"error": f"An error occurred: {str(e)}"}
+
+
+@tool
+def get_vix_closing_value_tool(query: str) -> str:
+    """
+    Get the most recent closing value of the VIX index.
+
+    IMPORTANT: This tool provides the VIX index closing value.
+
+    Use this tool when you need:
+    - VIX index closing value OR VIX closing value today.
+
+    Args:
+        query (str): The search query related to VIX index closing value.
+    
+    Returns:
+        str: VIX index closing value answer.
+    """
+    try:
+        rich.print(f"\n[Action] Fetching VIX index closing value for query: {query}")
+
+        # Get the most recent document for context information
+        most_recent = market_collection.find_one(
+            {}, 
+            sort=[("timestamp", -1)]
+        )
+        
+        if not most_recent:
+            return "VIX closing value not available. No market analysis reports found."
+        
+        # Extract the date of the most recent report
+        report = most_recent.get("report", {})
+        vix_closing_value = report.get("market_volatility_index", {}).get("fluctuation_answer", "")
+        
+        # Extract only the VIX close price part
+        if "VIX close price is" in vix_closing_value:
+            # Parse just the "VIX close price is X.XX" part
+            vix_part = vix_closing_value.split("(")[0].strip()
+            return vix_part
+        else:
+            return "VIX closing value is not available in the expected format."
+
+    except Exception as e:
+        rich.print(f"[bright_red]Error fetching VIX index closing value: {str(e)}[/bright_red]")
+        return f"Unable to retrieve VIX closing value: {str(e)}"
+
+
+@tool
+def get_portfolio_allocation_tool(query: str) -> dict:
+    """Get the most recent portfolio allocation.
+
+    IMPORTANT: This tool provides the most recent portfolio allocation.
+
+    Use this tool when you need:
+    - Portfolio allocation for the current portfolio.
+    - Asset distribution information
+    - Current investment breakdown
+
+    Args:
+        query (str): The search query related to portfolio allocation.
+
+    Returns:
+        dict: Portfolio allocation showing assets, descriptions, and percentages.
+    """
+    try:
+        rich.print(f"\n[Action] Fetching portfolio allocation for query: {query}")
+
+        # Get the most recent document for context information
+        most_recent = market_collection.find_one(
+            {}, 
+            sort=[("timestamp", -1)]
+        )
+        
+        if not most_recent:
+            return {"error": "Portfolio allocation not available. No market analysis reports found."}
+        
+        # Extract the portfolio allocation data
+        portfolio_allocation = most_recent.get("portfolio_allocation", [])
+        
+        if not portfolio_allocation:
+            return {"error": "Portfolio allocation data not found in the most recent report."}
+        
+        # Return the simplified portfolio allocation data
+        return {
+            "portfolio_allocation": portfolio_allocation,
+        }
+    
+    except Exception as e:
+        rich.print(f"[bright_red]Error fetching portfolio allocation: {str(e)}[/bright_red]")
+        return {"error": f"Unable to retrieve portfolio allocation: {str(e)}"}
+
+
+@tool
+def get_portfolio_ytd_return_tool(query: str) -> str:
+    """
+    Get the Year-to-Date (YTD) rate of return for the portfolio.
+
+    IMPORTANT: This tool provides the YTD performance of the current portfolio.
+
+    Use this tool when you need:
+    - Year-to-date return of the portfolio
+    - YTD portfolio performance 
+    - How the portfolio has performed since the beginning of this year
+
+    Args:
+        query (str): The search query related to portfolio YTD return.
+
+    Returns:
+        str: Portfolio YTD return percentage and information.
+    """
+    try:
+        rich.print(f"\n[Action] Calculating portfolio YTD return for query: {query}")
+        
+        # Get current date information
+        current_date = datetime.now()
+        current_year = current_date.year
+        
+        # Find the first trading day entry of the current year
+        start_of_year = datetime(current_year, 1, 1)
+        first_entry_of_year = portfolio_performance_collection.find_one(
+            {"date": {"$gte": start_of_year}},
+            sort=[("date", 1)]
+        )
+        
+        if not first_entry_of_year:
+            return "Could not find portfolio data for the current year."
+        
+        # Get the most recent entry
+        latest_entry = portfolio_performance_collection.find_one(
+            {}, 
+            sort=[("date", -1)]
+        )
+        
+        if not latest_entry:
+            return "Could not find recent portfolio performance data."
+            
+        # Extract start and end dates for better context
+        start_date = first_entry_of_year.get("date").strftime("%Y-%m-%d")
+        end_date = latest_entry.get("date").strftime("%Y-%m-%d")
+        
+        # Extract cumulative returns
+        start_cumulative_return = first_entry_of_year.get("percentage_of_cumulative_return", 0)
+        end_cumulative_return = latest_entry.get("percentage_of_cumulative_return", 0)
+        
+        # Calculate YTD return
+        ytd_return = end_cumulative_return - start_cumulative_return
+        
+        # Format the response with detailed information
+        return (f"The portfolio's YTD return from {start_date} to {end_date} is {ytd_return:.2f}%. "
+                f"(Starting cumulative return: {start_cumulative_return:.2f}%, "
+                f"Current cumulative return: {end_cumulative_return:.2f}%)")
+        
+    except Exception as e:
+        rich.print(f"[bright_red]Error calculating portfolio YTD return: {str(e)}[/bright_red]")
+        return f"Unable to calculate YTD return: {str(e)}"
 
 
 # Define a function to process chunks from the agent
@@ -627,7 +922,11 @@ async def main():
         tools=[
             tavily, 
             market_analysis_reports_vector_search_tool, 
-            market_news_reports_vector_search_tool
+            market_news_reports_vector_search_tool,
+            market_social_media_reports_vector_search_tool,
+            get_vix_closing_value_tool,
+            get_portfolio_allocation_tool,
+            get_portfolio_ytd_return_tool
         ], 
         checkpointer=memory
     )
