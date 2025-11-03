@@ -26,5 +26,6 @@ envSecrets:
 
 serviceAccount:
   enabled: true
-  create: false  # Don't create a new service account
-  name: irsa  # Use the existing one
+  irsa:
+    accountId: "275662791714"
+    roleName: "kanopy-prod-cicd-irsa"
