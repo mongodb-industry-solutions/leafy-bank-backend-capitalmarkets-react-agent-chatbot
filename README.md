@@ -367,6 +367,6 @@ E.g. `http://localhost:8006/docs`
 > [!IMPORTANT]
 > Check that you've created an `.env` file that contains the required environment variables.
 
-## 📄 **License**
+## 📄 License
 
-This project is for educational and demonstration purposes. 
+See [LICENSE](LICENSE) file for details.

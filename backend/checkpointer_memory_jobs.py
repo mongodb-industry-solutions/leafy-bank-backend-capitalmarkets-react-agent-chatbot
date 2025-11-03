@@ -111,8 +111,21 @@ class CheckpointerMemoryJobs:
         """
         Schedule jobs
         """
-        # Daily
-        run_cleanup_old_memories_time = dt.time(hour=4, minute=0, tzinfo=timezone.utc)
+        # Get NODE_ENV to determine the scheduled time
+        node_env = os.getenv("NODE_ENV", "").lower()
+        
+        # Set scheduled time based on environment
+        if node_env == "prod":
+            run_cleanup_old_memories_time = dt.time(hour=4, minute=5, tzinfo=timezone.utc)
+        elif node_env == "staging":
+            run_cleanup_old_memories_time = dt.time(hour=4, minute=10, tzinfo=timezone.utc)
+        elif node_env == "dev":
+            run_cleanup_old_memories_time = dt.time(hour=4, minute=15, tzinfo=timezone.utc)
+        else:
+            # Default fallback
+            run_cleanup_old_memories_time = dt.time(hour=4, minute=20, tzinfo=timezone.utc)
+        
+        logger.info(f"Scheduling cleanup job at {run_cleanup_old_memories_time} (NODE_ENV={node_env})")
         self.scheduler.daily(run_cleanup_old_memories_time, self.run_clear_old_memories)
         logger.info("Scheduled jobs configured!")
 

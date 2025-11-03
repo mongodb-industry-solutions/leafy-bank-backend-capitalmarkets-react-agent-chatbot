@@ -1,0 +1,30 @@
+env:
+  NODE_ENV: staging
+  
+envSecrets:
+  MONGODB_URI: capitalmarkets-react-agent-stocks
+  DATABASE_NAME: capitalmarkets-react-agent-stocks
+  APP_NAME: capitalmarkets-react-agent-stocks
+  VOYAGE_API_KEY: capitalmarkets-react-agent-stocks
+  TAVILY_API_KEY: capitalmarkets-react-agent-stocks
+  AWS_REGION: capitalmarkets-react-agent-stocks
+  CHAT_COMPLETIONS_MODEL_ID: capitalmarkets-react-agent-stocks
+  EMBEDDINGS_MODEL_ID: capitalmarkets-react-agent-stocks
+  AGENT_PROFILES_COLLECTION: capitalmarkets-react-agent-stocks
+  CHECKPOINTS_AIO_COLLECTION: capitalmarkets-react-agent-stocks
+  CHECKPOINTS_WRITES_AIO_COLLECTION: capitalmarkets-react-agent-stocks
+  REPORTS_COLLECTION_MARKET_ANALYSIS: capitalmarkets-react-agent-stocks
+  REPORT_MARKET_ANALISYS_VECTOR_INDEX_NAME: capitalmarkets-react-agent-stocks
+  REPORTS_COLLECTION_MARKET_NEWS: capitalmarkets-react-agent-stocks
+  REPORT_MARKET_NEWS_VECTOR_INDEX_NAME: capitalmarkets-react-agent-stocks
+  REPORTS_COLLECTION_MARKET_SM: capitalmarkets-react-agent-stocks
+  REPORT_MARKET_SM_VECTOR_INDEX_NAME: capitalmarkets-react-agent-stocks
+  REPORT_VECTOR_FIELD: capitalmarkets-react-agent-stocks
+  PORTFOLIO_PERFORMANCE_COLLECTION: capitalmarkets-react-agent-stocks
+  PORTFOLIO_ALLOCATION_COLLECTION: capitalmarkets-react-agent-stocks
+  NODE_ENV: capitalmarkets-react-agent-stocks
+
+serviceAccount:
+  enabled: true
+  create: false  # Don't create a new service account
+  name: irsa  # Use the existing one
