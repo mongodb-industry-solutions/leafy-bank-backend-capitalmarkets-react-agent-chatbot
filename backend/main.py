@@ -7,7 +7,7 @@ from api_market_assistant import router as market_assistant_router
 # Add checkpointer API router
 from api_checkpointer import router as checkpointer_router
 
-# Configure logging
+# Logging
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
