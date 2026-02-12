@@ -38,6 +38,7 @@ bedrock_client = BedrockClient()._get_bedrock_client()
 # Initialize ChatBedrock LLM
 llm = ChatBedrockConverse(model=os.getenv("CHAT_COMPLETIONS_MODEL_ID"),
                 client=bedrock_client,
+                provider="anthropic",
                 temperature=0)
 
 # Initialize TavilySearch
