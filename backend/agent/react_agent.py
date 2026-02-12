@@ -59,6 +59,7 @@ class MarketAssistantReactAgent:
         self.chat_completion_model_id = os.getenv("CHAT_COMPLETIONS_MODEL_ID")
         self.llm = ChatBedrock(model=self.chat_completion_model_id,
                 client=bedrock_client,
+                provider="anthropic",
                 temperature=0)
         
         # Initialize async MongoDB client
