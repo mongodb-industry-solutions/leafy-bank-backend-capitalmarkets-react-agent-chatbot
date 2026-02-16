@@ -1,7 +1,7 @@
 # Imports 
 import os
 from dotenv import load_dotenv
-from langchain_aws import ChatBedrock
+from langchain_aws import ChatBedrockConverse
 from agent.bedrock.client import BedrockClient
 from langchain_tavily import TavilySearch
 from langchain_core.messages import HumanMessage, AIMessage
@@ -36,8 +36,9 @@ rich = Console()
 bedrock_client = BedrockClient()._get_bedrock_client()
 
 # Initialize ChatBedrock LLM
-llm = ChatBedrock(model=os.getenv("CHAT_COMPLETIONS_MODEL_ID"),
+llm = ChatBedrockConverse(model=os.getenv("CHAT_COMPLETIONS_MODEL_ID"),
                 client=bedrock_client,
+                provider="anthropic",
                 temperature=0)
 
 # Initialize TavilySearch

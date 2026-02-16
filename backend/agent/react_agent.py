@@ -2,7 +2,7 @@ import os
 from datetime import datetime, timezone
 import logging
 from dotenv import load_dotenv
-from langchain_aws import ChatBedrock
+from langchain_aws import ChatBedrockConverse
 from agent.bedrock.client import BedrockClient
 from pymongo import AsyncMongoClient
 
@@ -57,8 +57,9 @@ class MarketAssistantReactAgent:
 
         # Initialize LLM
         self.chat_completion_model_id = os.getenv("CHAT_COMPLETIONS_MODEL_ID")
-        self.llm = ChatBedrock(model=self.chat_completion_model_id,
+        self.llm = ChatBedrockConverse(model=self.chat_completion_model_id,
                 client=bedrock_client,
+                provider="anthropic",
                 temperature=0)
         
         # Initialize async MongoDB client
