@@ -52,8 +52,8 @@ ve = VogayeAIEmbeddings(api_key=os.getenv("VOYAGE_API_KEY"))
 market_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_ANALYSIS", "reports_market_analysis")
 news_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_NEWS", "reports_market_news")
 market_sm_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_SM", "reports_market_sm")
-portfolio_allocation_collection_name = os.getenv("PORTFOLIO_ALLOCATION_COLLECTION", "portfolio_allocation")
-portfolio_performance_collection_name = os.getenv("PORTFOLIO_PERFORMANCE_COLLECTION", "portfolio_performance")
+portfolio_allocation_collection_name = os.getenv("PORTFOLIO_ALLOCATION_COLLECTION", "portfolioAllocation")
+portfolio_performance_collection_name = os.getenv("PORTFOLIO_PERFORMANCE_COLLECTION", "portfolioPerformance")
 mongodb_connector = MongoDBConnector()
 market_collection = mongodb_connector.get_collection(market_collection_name)
 news_collection = mongodb_connector.get_collection(news_collection_name)
@@ -675,8 +675,8 @@ def get_portfolio_ytd_return_tool(query: str) -> str:
         end_date = latest_entry.get("date").strftime("%Y-%m-%d")
         
         # Extract cumulative returns
-        start_cumulative_return = first_entry_of_year.get("percentage_of_cumulative_return", 0)
-        end_cumulative_return = latest_entry.get("percentage_of_cumulative_return", 0)
+        start_cumulative_return = first_entry_of_year.get("percentageOfCumulativeReturn", 0)
+        end_cumulative_return = latest_entry.get("percentageOfCumulativeReturn", 0)
         
         # Calculate YTD return
         ytd_return = end_cumulative_return - start_cumulative_return
@@ -818,7 +818,12 @@ async def main():
     async_mongodb_memory_collection = async_mongodb_client[DATABASE_NAME][CHECKPOINTS_AIO_COLLECTION]
 
     # Initialize persistent chat memory
-    memory = AsyncMongoDBSaver(client=async_mongodb_client, db_name=DATABASE_NAME)
+    memory = AsyncMongoDBSaver(
+        client=async_mongodb_client,
+        db_name=DATABASE_NAME,
+        checkpoint_collection_name=CHECKPOINTS_AIO_COLLECTION,
+        writes_collection_name=CHECKPOINTS_WRITES_AIO_COLLECTION
+    )
 
     # Ask user if they want a new thread, continue an existing one, or clear memory
     rich.print("\nWelcome to the Market Assistant!\n", style="bold green")
