@@ -28,8 +28,8 @@ ve = VogayeAIEmbeddings(api_key=os.getenv("VOYAGE_API_KEY"))
 MARKET_ANALYSIS_COLLECTION_NAME = os.getenv("REPORTS_COLLECTION_MARKET_ANALYSIS", "reports_market_analysis")
 MARKET_NEWS_COLLECTION_NAME = os.getenv("REPORTS_COLLECTION_MARKET_NEWS", "reports_market_news")
 MARKET_SM_COLLECTION_NAME = os.getenv("REPORTS_COLLECTION_MARKET_SM", "reports_market_sm")
-PORTFOLIO_ALLOCATION_COLLECTION_NAME = os.getenv("PORTFOLIO_ALLOCATION_COLLECTION", "portfolio_allocation")
-PORTFOLIO_PERFORMANCE_COLLECTION_NAME = os.getenv("PORTFOLIO_PERFORMANCE_COLLECTION", "portfolio_performance")
+PORTFOLIO_ALLOCATION_COLLECTION_NAME = os.getenv("PORTFOLIO_ALLOCATION_COLLECTION", "portfolioAllocation")
+PORTFOLIO_PERFORMANCE_COLLECTION_NAME = os.getenv("PORTFOLIO_PERFORMANCE_COLLECTION", "portfolioPerformance")
 
 # Initialize MongoDB connector
 mongodb_connector = MongoDBConnector()
@@ -699,8 +699,8 @@ def get_portfolio_ytd_return_tool(query: str) -> str:
         end_date = latest_entry.get("date").strftime("%Y-%m-%d")
         
         # Extract cumulative returns
-        start_cumulative_return = first_entry_of_year.get("percentage_of_cumulative_return", 0)
-        end_cumulative_return = latest_entry.get("percentage_of_cumulative_return", 0)
+        start_cumulative_return = first_entry_of_year.get("percentageOfCumulativeReturn", 0)
+        end_cumulative_return = latest_entry.get("percentageOfCumulativeReturn", 0)
         
         # Calculate YTD return
         ytd_return = end_cumulative_return - start_cumulative_return
