@@ -1,0 +1,38 @@
+# TEMPORARY — ist-prod green deployment (blue/green cutover).
+# Clone of prod.yaml; the ONLY difference is every envSecrets value points at the
+# green ksec group `capitalmarkets-react-agent-stocks-bian` instead of
+# `capitalmarkets-react-agent-stocks`.
+# Deployed by the `production-bian` Drone pipeline on the `prod-green` branch.
+# At Phase 3 this file is renamed to prod.yaml and the temp pipeline is deleted.
+
+env:
+  NODE_ENV: prod
+
+envSecrets:
+  MONGODB_URI: capitalmarkets-react-agent-stocks-bian
+  DATABASE_NAME: capitalmarkets-react-agent-stocks-bian
+  APP_NAME: capitalmarkets-react-agent-stocks-bian
+  VOYAGE_API_KEY: capitalmarkets-react-agent-stocks-bian
+  TAVILY_API_KEY: capitalmarkets-react-agent-stocks-bian
+  AWS_REGION: capitalmarkets-react-agent-stocks-bian
+  CHAT_COMPLETIONS_MODEL_ID: capitalmarkets-react-agent-stocks-bian
+  EMBEDDINGS_MODEL_ID: capitalmarkets-react-agent-stocks-bian
+  AGENT_PROFILES_COLLECTION: capitalmarkets-react-agent-stocks-bian
+  CHECKPOINTS_AIO_COLLECTION: capitalmarkets-react-agent-stocks-bian
+  CHECKPOINTS_WRITES_AIO_COLLECTION: capitalmarkets-react-agent-stocks-bian
+  REPORTS_COLLECTION_MARKET_ANALYSIS: capitalmarkets-react-agent-stocks-bian
+  REPORT_MARKET_ANALISYS_VECTOR_INDEX_NAME: capitalmarkets-react-agent-stocks-bian
+  REPORTS_COLLECTION_MARKET_NEWS: capitalmarkets-react-agent-stocks-bian
+  REPORT_MARKET_NEWS_VECTOR_INDEX_NAME: capitalmarkets-react-agent-stocks-bian
+  REPORTS_COLLECTION_MARKET_SM: capitalmarkets-react-agent-stocks-bian
+  REPORT_MARKET_SM_VECTOR_INDEX_NAME: capitalmarkets-react-agent-stocks-bian
+  REPORT_VECTOR_FIELD: capitalmarkets-react-agent-stocks-bian
+  PORTFOLIO_PERFORMANCE_COLLECTION: capitalmarkets-react-agent-stocks-bian
+  PORTFOLIO_ALLOCATION_COLLECTION: capitalmarkets-react-agent-stocks-bian
+  NODE_ENV: capitalmarkets-react-agent-stocks-bian
+
+serviceAccount:
+  enabled: true
+  irsa:
+    accountId: "275662791714"
+    roleName: "kanopy-prod-cicd-irsa"
