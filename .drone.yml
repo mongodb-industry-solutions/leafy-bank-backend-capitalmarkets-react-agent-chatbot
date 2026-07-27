@@ -145,7 +145,7 @@ steps:
       chart_version: 4.25.0
       add_repos: [mongodb=https://10gen.github.io/helm-charts]
       namespace: industrysolutions
-      release: capitalmarkets-react-agent-stocks-bian-prod
+      release: capitalmarkets-stocks-bian-prod
       values:
         - "image.tag=git-${DRONE_COMMIT_SHA:0:7}"
         - "image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/industrysolutions/capitalmarkets-react-agent-stocks-bian"
