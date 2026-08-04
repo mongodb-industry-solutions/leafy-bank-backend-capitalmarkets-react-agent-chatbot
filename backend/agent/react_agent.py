@@ -65,7 +65,12 @@ class MarketAssistantReactAgent:
         # Initialize async MongoDB client
         self.async_mongodb_client = AsyncMongoClient(self.mongodb_uri)
         self.async_mongodb_memory_collection = self.async_mongodb_client[self.database_name][self.checkpoints_collection]
-        self.memory = AsyncMongoDBSaver(client=self.async_mongodb_client, db_name=self.database_name)
+        self.memory = AsyncMongoDBSaver(
+            client=self.async_mongodb_client,
+            db_name=self.database_name,
+            checkpoint_collection_name=self.checkpoints_collection,
+            writes_collection_name=self.checkpoint_writes_collection
+        )
         
         # Create the agent with tools - done at initialization to avoid recreation
         self.langgraph_agent = create_react_agent(
