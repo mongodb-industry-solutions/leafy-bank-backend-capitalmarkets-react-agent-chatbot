@@ -808,11 +808,12 @@ async def main():
     # Load MongoDB configuration from environment variables
     MONGODB_URI = os.getenv("MONGODB_URI")
     DATABASE_NAME = os.getenv("DATABASE_NAME")
+    APP_NAME = os.getenv("APP_NAME")
     CHECKPOINTS_AIO_COLLECTION = os.getenv("CHECKPOINTS_AIO_COLLECTION", "checkpoints_aio")
     CHECKPOINTS_WRITES_AIO_COLLECTION = os.getenv("CHECKPOINTS_WRITES_AIO_COLLECTION", "checkpoint_writes_aio")
 
     # Initialize the async MongoDB client
-    async_mongodb_client = AsyncMongoClient(MONGODB_URI)
+    async_mongodb_client = AsyncMongoClient(MONGODB_URI, appname=APP_NAME)
     
     # Initialize the async MongoDB collection for memory
     async_mongodb_memory_collection = async_mongodb_client[DATABASE_NAME][CHECKPOINTS_AIO_COLLECTION]
