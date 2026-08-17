@@ -182,6 +182,27 @@ The Market Assistant ReAct Agent leverages specialized tools to access and analy
 4. **Vector Search for Semantic Understanding:** MongoDB Vector Search enables the agent to perform semantic searches across financial data, such as market analysis and news reports. This capability ensures that the agent retrieves the most relevant and contextually accurate information for user queries.
 5. **Schema Flexibility for Evolving Workflows:** MongoDB's schema flexibility allows the agent's workflows to evolve without requiring disruptive schema migrations. This adaptability is crucial for rapidly iterating on AI-driven solutions in dynamic financial markets.
 
+## Why Voyage AI?
+
+The agent has to match a plain-language question against market analysis, news, and
+social sentiment reports written in financial language — and it has to do that at
+query time, not just once during seeding.
+
+- **Financial language isn't general language.** "Downtrend," "MA50," and a ticker
+  symbol carry precise meaning in a market report that a general-purpose embedding
+  model tends to flatten. `voyage-finance-2` is trained on financial text
+  specifically, so a query like "how are my tech holdings doing" lands close to a
+  report discussing QQQ's moving averages, not just anything mentioning "stocks."
+- **The same model has to run twice, consistently.** Every report was embedded once
+  at generation time; every user question gets embedded again live, in
+  `react_agent_tools.py`, before the vector search runs. If those two embeddings came
+  from different models, similarity scores would be meaningless — this repo pins one
+  model (`EMBEDDINGS_MODEL_ID=voyage-finance-2`) for both.
+- **1024 dimensions across three collections.** Market analysis, news, and social
+  sentiment reports all embed with the same model into the same dimensionality, so
+  the three vector indexes in `vector_search_index_creator.py` share one
+  configuration instead of three.
+
 ## The 4 Pillars of the Document Model
 
 1. **Easy**: [MongoDB's document model](https://www.mongodb.com/resources/basics/databases/document-databases?utm_campaign=devrel&utm_source=github&utm_medium=referral&utm_content=market.assistant.langgraph.react&utm_term=learning.fuel) naturally fits with object-oriented programming, utilizing BSON documents that closely resemble JSON. This design simplifies the management of complex data structures such as user accounts, allowing developers to build features like account creation, retrieval, and updates with greater ease.
