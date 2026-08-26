@@ -52,8 +52,8 @@ ve = VogayeAIEmbeddings(api_key=os.getenv("VOYAGE_API_KEY"))
 market_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_ANALYSIS", "reports_market_analysis")
 news_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_NEWS", "reports_market_news")
 market_sm_collection_name = os.getenv("REPORTS_COLLECTION_MARKET_SM", "reports_market_sm")
-portfolio_allocation_collection_name = os.getenv("PORTFOLIO_ALLOCATION_COLLECTION", "portfolioAllocation")
-portfolio_performance_collection_name = os.getenv("PORTFOLIO_PERFORMANCE_COLLECTION", "portfolioPerformance")
+portfolio_allocation_collection_name = os.getenv("PORTFOLIO_ALLOCATION_COLLECTION", "portfolio_allocation")
+portfolio_performance_collection_name = os.getenv("PORTFOLIO_PERFORMANCE_COLLECTION", "portfolio_performance")
 mongodb_connector = MongoDBConnector()
 market_collection = mongodb_connector.get_collection(market_collection_name)
 news_collection = mongodb_connector.get_collection(news_collection_name)
@@ -808,11 +808,12 @@ async def main():
     # Load MongoDB configuration from environment variables
     MONGODB_URI = os.getenv("MONGODB_URI")
     DATABASE_NAME = os.getenv("DATABASE_NAME")
+    APP_NAME = os.getenv("APP_NAME")
     CHECKPOINTS_AIO_COLLECTION = os.getenv("CHECKPOINTS_AIO_COLLECTION", "checkpoints_aio")
     CHECKPOINTS_WRITES_AIO_COLLECTION = os.getenv("CHECKPOINTS_WRITES_AIO_COLLECTION", "checkpoint_writes_aio")
 
     # Initialize the async MongoDB client
-    async_mongodb_client = AsyncMongoClient(MONGODB_URI)
+    async_mongodb_client = AsyncMongoClient(MONGODB_URI, appname=APP_NAME)
     
     # Initialize the async MongoDB collection for memory
     async_mongodb_memory_collection = async_mongodb_client[DATABASE_NAME][CHECKPOINTS_AIO_COLLECTION]
