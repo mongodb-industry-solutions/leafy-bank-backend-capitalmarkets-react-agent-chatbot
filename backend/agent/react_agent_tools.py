@@ -28,8 +28,8 @@ ve = VogayeAIEmbeddings(api_key=os.getenv("VOYAGE_API_KEY"))
 MARKET_ANALYSIS_COLLECTION_NAME = os.getenv("REPORTS_COLLECTION_MARKET_ANALYSIS", "reports_market_analysis")
 MARKET_NEWS_COLLECTION_NAME = os.getenv("REPORTS_COLLECTION_MARKET_NEWS", "reports_market_news")
 MARKET_SM_COLLECTION_NAME = os.getenv("REPORTS_COLLECTION_MARKET_SM", "reports_market_sm")
-PORTFOLIO_ALLOCATION_COLLECTION_NAME = os.getenv("PORTFOLIO_ALLOCATION_COLLECTION", "portfolioAllocation")
-PORTFOLIO_PERFORMANCE_COLLECTION_NAME = os.getenv("PORTFOLIO_PERFORMANCE_COLLECTION", "portfolioPerformance")
+PORTFOLIO_ALLOCATION_COLLECTION_NAME = os.getenv("PORTFOLIO_ALLOCATION_COLLECTION", "portfolio_allocation")
+PORTFOLIO_PERFORMANCE_COLLECTION_NAME = os.getenv("PORTFOLIO_PERFORMANCE_COLLECTION", "portfolio_performance")
 
 # Initialize MongoDB connector
 mongodb_connector = MongoDBConnector()

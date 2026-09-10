@@ -43,6 +43,7 @@ class MarketAssistantReactAgent:
         # Load MongoDB configuration from environment variables
         self.mongodb_uri = os.getenv("MONGODB_URI")
         self.database_name = os.getenv("DATABASE_NAME")
+        self.appname = os.getenv("APP_NAME")
         self.checkpoints_collection = os.getenv("CHECKPOINTS_AIO_COLLECTION", "checkpoints_aio")
         self.checkpoint_writes_collection = os.getenv("CHECKPOINTS_WRITES_AIO_COLLECTION", "checkpoint_writes_aio")
 
@@ -63,7 +64,7 @@ class MarketAssistantReactAgent:
                 temperature=0)
         
         # Initialize async MongoDB client
-        self.async_mongodb_client = AsyncMongoClient(self.mongodb_uri)
+        self.async_mongodb_client = AsyncMongoClient(self.mongodb_uri, appname=self.appname)
         self.async_mongodb_memory_collection = self.async_mongodb_client[self.database_name][self.checkpoints_collection]
         self.memory = AsyncMongoDBSaver(
             client=self.async_mongodb_client,
