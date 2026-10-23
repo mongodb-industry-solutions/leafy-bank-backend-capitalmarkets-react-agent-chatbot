@@ -28,11 +28,12 @@ class CheckpointerMemoryJobs:
         # Load MongoDB configuration from environment variables
         self.mongodb_uri = os.getenv("MONGODB_URI")
         self.database_name = os.getenv("DATABASE_NAME")
+        self.appname = os.getenv("APP_NAME")
         self.checkpoints_collection = os.getenv("CHECKPOINTS_AIO_COLLECTION", "checkpoints_aio")
         self.checkpoint_writes_collection = os.getenv("CHECKPOINTS_WRITES_AIO_COLLECTION", "checkpoint_writes_aio")
-        
+
         # Initialize MongoDB client
-        self.mongodb_client = MongoClient(self.mongodb_uri)
+        self.mongodb_client = MongoClient(self.mongodb_uri, appname=self.appname)
 
         self.utc = pytz.UTC
         self.scheduler = Scheduler(tzinfo=timezone.utc)

@@ -675,8 +675,8 @@ def get_portfolio_ytd_return_tool(query: str) -> str:
         end_date = latest_entry.get("date").strftime("%Y-%m-%d")
         
         # Extract cumulative returns
-        start_cumulative_return = first_entry_of_year.get("percentage_of_cumulative_return", 0)
-        end_cumulative_return = latest_entry.get("percentage_of_cumulative_return", 0)
+        start_cumulative_return = first_entry_of_year.get("percentageOfCumulativeReturn", 0)
+        end_cumulative_return = latest_entry.get("percentageOfCumulativeReturn", 0)
         
         # Calculate YTD return
         ytd_return = end_cumulative_return - start_cumulative_return
@@ -808,17 +808,23 @@ async def main():
     # Load MongoDB configuration from environment variables
     MONGODB_URI = os.getenv("MONGODB_URI")
     DATABASE_NAME = os.getenv("DATABASE_NAME")
+    APP_NAME = os.getenv("APP_NAME")
     CHECKPOINTS_AIO_COLLECTION = os.getenv("CHECKPOINTS_AIO_COLLECTION", "checkpoints_aio")
     CHECKPOINTS_WRITES_AIO_COLLECTION = os.getenv("CHECKPOINTS_WRITES_AIO_COLLECTION", "checkpoint_writes_aio")
 
     # Initialize the async MongoDB client
-    async_mongodb_client = AsyncMongoClient(MONGODB_URI)
+    async_mongodb_client = AsyncMongoClient(MONGODB_URI, appname=APP_NAME)
     
     # Initialize the async MongoDB collection for memory
     async_mongodb_memory_collection = async_mongodb_client[DATABASE_NAME][CHECKPOINTS_AIO_COLLECTION]
 
     # Initialize persistent chat memory
-    memory = AsyncMongoDBSaver(client=async_mongodb_client, db_name=DATABASE_NAME)
+    memory = AsyncMongoDBSaver(
+        client=async_mongodb_client,
+        db_name=DATABASE_NAME,
+        checkpoint_collection_name=CHECKPOINTS_AIO_COLLECTION,
+        writes_collection_name=CHECKPOINTS_WRITES_AIO_COLLECTION
+    )
 
     # Ask user if they want a new thread, continue an existing one, or clear memory
     rich.print("\nWelcome to the Market Assistant!\n", style="bold green")

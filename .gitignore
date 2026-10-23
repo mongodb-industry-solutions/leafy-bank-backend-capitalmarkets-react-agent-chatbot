@@ -1,6 +1,9 @@
 # Kanopy
 knowledge_base_kanopy/
 
+# claude: share the plugin config, keep per-developer overrides local
+.claude/settings.local.json
+
 # task-def.json
 **/task-def.json
 
