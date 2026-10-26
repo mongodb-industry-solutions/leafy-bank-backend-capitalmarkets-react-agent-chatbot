@@ -11,7 +11,7 @@ Bedrock for chat completions, and VoyageAI for finance-domain embeddings.
 
 ```bash
 cd backend
-poetry env use python3.10   # the project pins python = ">=3.10,<3.11" exactly
+poetry env use python3.11   # the project pins python = ">=3.11,<3.12" exactly
 poetry install --no-interaction -v --no-cache --no-root
 poetry run uvicorn main:app --host 0.0.0.0 --port 8006 --reload
 ```
@@ -112,8 +112,8 @@ defaults. The three that most often cause silent failures if missing:
 
 Constraints worth knowing before you debug a failure:
 
-- **Python must be exactly 3.10.x.** `pyproject.toml` pins
-  `python = ">=3.10,<3.11"`. 3.13 (a common current default) will not
+- **Python must be exactly 3.11.x.** `pyproject.toml` pins
+  `python = ">=3.11,<3.12"`. 3.13 (a common current default) will not
   resolve the lockfile.
 - **AWS SSO sessions expire mid-task.** If Bedrock calls start failing with
   `ExpiredTokenException` or `NoCredentialsError` partway through a long

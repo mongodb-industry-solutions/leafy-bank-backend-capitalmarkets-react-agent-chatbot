@@ -252,7 +252,7 @@ query time, not just once during seeding.
 Before you begin, ensure you have met the following requirements:
 
 - **MongoDB Atlas** account - [Sign up for free](https://www.mongodb.com/products/platform?utm_campaign=devrel&utm_source=github&utm_medium=referral&utm_content=market.assistant.langgraph.react&utm_term=learning.fuel) and deploy an M0 cluster
-- **Python 3.10 or higher**
+- **Python 3.11 or higher**
 - **Poetry** (install via [Poetry's official documentation](https://python-poetry.org/docs/#installation))
 
 ## Setup Instructions

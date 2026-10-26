@@ -6,7 +6,8 @@ authors = ["Julian Boronat <julian.boronat@mongodb.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.11"
+python = ">=3.11,<3.12"
+pillow = "^13.0.0"
 pymongo = "^4.10.1"
 python-dotenv = "^1.0.1"
 fastapi = "^0.115.4"
